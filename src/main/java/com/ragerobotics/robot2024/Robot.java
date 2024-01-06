@@ -26,11 +26,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        for (ISystem system : m_systems) {
-            if (!system.isOkay()) {
-                System.err.println("Error with system: " + system);
-            }
-        }
+
     }
 
     @Override

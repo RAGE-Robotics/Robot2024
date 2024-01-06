@@ -18,17 +18,7 @@ public class SwerveDrive implements ISystem {
     }
 
     @Override
-    public String toString() {
-        return "[SwerveDrive]";
-    }
-
-    @Override
     public void onUpdate(double timestamp, Robot.Mode mode) {
 
-    }
-
-    @Override
-    public boolean isOkay() {
-        return true;
     }
 }
