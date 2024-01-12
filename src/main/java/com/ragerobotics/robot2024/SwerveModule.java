@@ -5,16 +5,23 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class SwerveModule {
+    private Translation2d m_loc;
     private TalonFX m_driveMotor;
     private TalonSRX m_steeringMotor;
 
-    public SwerveModule(TalonFX driveMotor, TalonSRX steeringMotor) {
+    public SwerveModule(Translation2d loc, TalonFX driveMotor, TalonSRX steeringMotor) {
+        m_loc = loc;
         m_driveMotor = driveMotor;
         m_steeringMotor = steeringMotor;
+    }
+
+    public Translation2d getLoc() {
+        return m_loc;
     }
 
     public SwerveModuleState getState() {
