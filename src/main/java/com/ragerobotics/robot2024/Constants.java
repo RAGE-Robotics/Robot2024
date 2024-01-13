@@ -25,4 +25,6 @@ public class Constants {
     public static final double kSteeringI = 0.0;
     public static final double kSteeringD = 0.0;
     public static final double kSteeringF = 0.0;
+
+    public static final int kDriverController = 0;
 }

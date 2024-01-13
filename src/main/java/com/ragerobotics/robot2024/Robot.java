@@ -7,6 +7,7 @@ import com.ragerobotics.robot2024.systems.SwerveDrive;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
     public enum Mode {
@@ -14,6 +15,8 @@ public class Robot extends TimedRobot {
     }
 
     private ArrayList<ISystem> m_systems = new ArrayList<>();
+
+    private XboxController m_driverController = new XboxController(Constants.kDriverController);
 
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
@@ -47,6 +50,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        double vx = m_driverController.getLeftY();
+        double vy = m_driverController.getLeftX();
+        double rot = m_driverController.getRightX();
+        SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
+
         double timestamp = Timer.getFPGATimestamp();
         for (ISystem system : m_systems) {
             system.onUpdate(timestamp, Mode.Teleop);
