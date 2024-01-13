@@ -2,6 +2,8 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
+import com.ragerobotics.robot2024.auto.DoNothing;
+import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.systems.ISystem;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
 
@@ -17,6 +19,8 @@ public class Robot extends TimedRobot {
     private ArrayList<ISystem> m_systems = new ArrayList<>();
 
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
+
+    private ITask m_autoTask = new DoNothing();
 
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
@@ -41,10 +45,31 @@ public class Robot extends TimedRobot {
     }
 
     @Override
+    public void autonomousInit() {
+        double timestamp = Timer.getFPGATimestamp();
+
+        if (m_autoTask != null) {
+            m_autoTask.onStart(timestamp);
+        }
+    }
+
+    @Override
     public void autonomousPeriodic() {
         double timestamp = Timer.getFPGATimestamp();
+
+        if (m_autoTask != null) {
+            m_autoTask.onUpdate(timestamp);
+        }
+
         for (ISystem system : m_systems) {
             system.onUpdate(timestamp, Mode.Auto);
+        }
+    }
+
+    @Override
+    public void teleopInit() {
+        if (m_autoTask != null) {
+            m_autoTask.onStop();
         }
     }
 
