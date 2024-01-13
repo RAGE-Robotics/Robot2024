@@ -1,6 +1,7 @@
 package com.ragerobotics.robot2024;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -48,5 +49,13 @@ public class SwerveModule {
         m_driveMotor.set(ControlMode.Velocity, state.speedMetersPerSecond
                 * (1000.0 / m_driveMotor.getStatusFramePeriod(0)) * Constants.kEncoderTicksPerWheelRotation);
         m_steeringMotor.set(ControlMode.Position, state.angle.getDegrees());
+    }
+
+    public void brake() {
+        m_driveMotor.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public void coast() {
+        m_driveMotor.setNeutralMode(NeutralMode.Coast);
     }
 }
