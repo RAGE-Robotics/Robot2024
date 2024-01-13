@@ -28,7 +28,7 @@ public class SwerveModule {
     public SwerveModuleState getState() {
         double distance = m_driveMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerWheelRotation
                 / (m_driveMotor.getStatusFramePeriod(0) / 1000.0) * 2 * Math.PI * Constants.kWheelRadius;
-        double angle = 0;
+        double angle = m_steeringMotor.getSelectedSensorPosition();
 
         return new SwerveModuleState(distance, new Rotation2d(angle));
     }
@@ -36,13 +36,13 @@ public class SwerveModule {
     public SwerveModulePosition getPosition() {
         double distance = m_driveMotor.getSelectedSensorPosition() / Constants.kEncoderTicksPerWheelRotation * 2
                 * Math.PI * Constants.kWheelRadius;
-        double angle = 0;
+        double angle = m_steeringMotor.getSelectedSensorPosition();
 
         return new SwerveModulePosition(distance, new Rotation2d(angle));
     }
 
     public void drive(SwerveModuleState setpoint) {
-        double angle = 0;
+        double angle = m_steeringMotor.getSelectedSensorPosition();
         Rotation2d rot = new Rotation2d(angle);
 
         SwerveModuleState state = SwerveModuleState.optimize(setpoint, rot);
