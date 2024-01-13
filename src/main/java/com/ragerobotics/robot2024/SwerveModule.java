@@ -19,6 +19,16 @@ public class SwerveModule {
         m_loc = loc;
         m_driveMotor = driveMotor;
         m_steeringMotor = steeringMotor;
+
+        m_driveMotor.config_kP(0, Constants.kDriveP);
+        m_driveMotor.config_kI(0, Constants.kDriveI);
+        m_driveMotor.config_kD(0, Constants.kDriveD);
+        m_driveMotor.config_kF(0, Constants.kDriveF);
+
+        m_steeringMotor.config_kP(0, Constants.kSteeringP);
+        m_steeringMotor.config_kI(0, Constants.kSteeringI);
+        m_steeringMotor.config_kD(0, Constants.kSteeringD);
+        m_steeringMotor.config_kF(0, Constants.kSteeringF);
     }
 
     public Translation2d getLoc() {

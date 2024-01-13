@@ -15,4 +15,14 @@ public class Constants {
     public static final int kBackLeftSteeringMotor = 5;
     public static final int kBackRightDriveMotor = 6;
     public static final int kBackRightSteeringMotor = 7;
+
+    public static final double kDriveP = 1.0;
+    public static final double kDriveI = 0.0;
+    public static final double kDriveD = 0.0;
+    public static final double kDriveF = 0.0;
+
+    public static final double kSteeringP = 1.0;
+    public static final double kSteeringI = 0.0;
+    public static final double kSteeringD = 0.0;
+    public static final double kSteeringF = 0.0;
 }
