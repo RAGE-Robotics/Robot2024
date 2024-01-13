@@ -6,6 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot;
 import com.ragerobotics.robot2024.SwerveModule;
+import com.ragerobotics.robot2024.Util;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -36,20 +37,20 @@ public class SwerveDrive implements ISystem {
 
         private SwerveModule m_frontLeftModule = new SwerveModule(
                         new Translation2d(Constants.kModuleCenterDistance, Constants.kModuleCenterDistance),
-                        new TalonFX(0),
-                        new TalonSRX(1));
+                        Util.makeTalonFX(Constants.kFrontLeftDriveMotor, false, false),
+                        Util.makeTalonSRX(Constants.kFrontLeftSteeringMotor, false, false, false, false));
         private SwerveModule m_frontRightModule = new SwerveModule(
                         new Translation2d(Constants.kModuleCenterDistance, -Constants.kModuleCenterDistance),
-                        new TalonFX(0),
-                        new TalonSRX(1));
+                        Util.makeTalonFX(Constants.kFrontRightDriveMotor, false, false),
+                        Util.makeTalonSRX(Constants.kFrontRightSteeringMotor, false, false, false, false));
         private SwerveModule m_backLeftModule = new SwerveModule(
                         new Translation2d(-Constants.kModuleCenterDistance, Constants.kModuleCenterDistance),
-                        new TalonFX(0),
-                        new TalonSRX(1));
+                        Util.makeTalonFX(Constants.kBackLeftDriveMotor, false, false),
+                        Util.makeTalonSRX(Constants.kBackLeftSteeringMotor, false, false, false, false));
         private SwerveModule m_backRightModule = new SwerveModule(
                         new Translation2d(-Constants.kModuleCenterDistance, -Constants.kModuleCenterDistance),
-                        new TalonFX(0),
-                        new TalonSRX(1));
+                        Util.makeTalonFX(Constants.kBackRightDriveMotor, false, false),
+                        Util.makeTalonSRX(Constants.kBackRightSteeringMotor, false, false, false, false));
 
         private AHRS m_navx = new AHRS(Port.kMXP);
 
@@ -99,8 +100,16 @@ public class SwerveDrive implements ISystem {
 
                 if (m_mode == Mode.Velocity) {
                         SwerveModuleState states[] = m_kinematics
-                                        .toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(m_vx, m_vy, m_rot,
-                                                        m_poseEstimator.getEstimatedPosition().getRotation()));
+                                        .toSwerveModuleStates(ChassisSpeeds.discretize(
+                                                        ChassisSpeeds.fromFieldRelativeSpeeds(m_vx, m_vy, m_rot,
+                                                                        m_poseEstimator.getEstimatedPosition()
+                                                                                        .getRotation()),
+                                                        Constants.kDt));
+                        SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.kMaxV);
+                        m_frontLeftModule.drive(states[0]);
+                        m_frontRightModule.drive(states[1]);
+                        m_backLeftModule.drive(states[2]);
+                        m_backRightModule.drive(states[3]);
                 }
         }
 }
