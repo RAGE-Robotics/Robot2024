@@ -16,13 +16,15 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class SwerveModule {
     private Translation2d m_loc;
-    private TalonFX m_driveMotor;
+    public TalonFX m_driveMotor;
     private TalonSRX m_steeringMotor;
+    private double m_angleOffset;
 
-    public SwerveModule(Translation2d loc, TalonFX driveMotor, TalonSRX steeringMotor) {
+    public SwerveModule(Translation2d loc, TalonFX driveMotor, TalonSRX steeringMotor, double angleOffset) {
         m_loc = loc;
         m_driveMotor = driveMotor;
         m_steeringMotor = steeringMotor;
+        m_angleOffset = angleOffset;
 
         m_driveMotor.config_kP(0, Constants.kDriveP);
         m_driveMotor.config_kI(0, Constants.kDriveI);
@@ -42,7 +44,9 @@ public class SwerveModule {
     public SwerveModuleState getState() {
         double distance = m_driveMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerWheelRotation
                 / (m_driveMotor.getStatusFramePeriod(0) / 1000.0) * 2 * Math.PI * Constants.kWheelRadius;
-        double angle = m_steeringMotor.getSelectedSensorPosition();
+        double angle = m_steeringMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerSteeringRotation * 2
+                * Math.PI
+                + m_angleOffset;
 
         return new SwerveModuleState(distance, new Rotation2d(angle));
     }
@@ -50,19 +54,25 @@ public class SwerveModule {
     public SwerveModulePosition getPosition() {
         double distance = m_driveMotor.getSelectedSensorPosition() / Constants.kEncoderTicksPerWheelRotation * 2
                 * Math.PI * Constants.kWheelRadius;
-        double angle = m_steeringMotor.getSelectedSensorPosition();
+        double angle = m_steeringMotor.getSelectedSensorPosition() / Constants.kEncoderTicksPerSteeringRotation * 2
+                * Math.PI
+                + m_angleOffset;
 
         return new SwerveModulePosition(distance, new Rotation2d(angle));
     }
 
     public void drive(SwerveModuleState setpoint) {
-        double angle = m_steeringMotor.getSelectedSensorPosition();
+        double angle = m_steeringMotor.getSelectedSensorPosition() / Constants.kEncoderTicksPerSteeringRotation * 2
+                * Math.PI
+                + m_angleOffset;
         Rotation2d rot = new Rotation2d(angle);
 
         SwerveModuleState state = SwerveModuleState.optimize(setpoint, rot);
         m_driveMotor.set(ControlMode.Velocity, state.speedMetersPerSecond
                 * (1000.0 / m_driveMotor.getStatusFramePeriod(0)) * Constants.kEncoderTicksPerWheelRotation);
-        m_steeringMotor.set(ControlMode.Position, state.angle.getDegrees());
+        m_steeringMotor.set(ControlMode.Position,
+                (state.angle.getRadians() + m_angleOffset) / (2 * Math.PI)
+                        * Constants.kEncoderTicksPerSteeringRotation);
     }
 
     public void brake() {

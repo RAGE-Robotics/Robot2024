@@ -37,6 +37,11 @@ public class Robot extends TimedRobot {
     }
 
     @Override
+    public void disabledInit() {
+        SwerveDrive.getInstance().set(SwerveDrive.Mode.Disabled, 0, 0, 0);
+    }
+
+    @Override
     public void disabledPeriodic() {
         double timestamp = Timer.getFPGATimestamp();
         for (ISystem system : m_systems) {
@@ -75,7 +80,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        double vx = m_driverController.getLeftY();
+        double vx = -m_driverController.getLeftY();
         double vy = m_driverController.getLeftX();
         double rot = m_driverController.getRightX();
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
