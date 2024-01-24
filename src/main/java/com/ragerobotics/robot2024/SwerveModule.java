@@ -44,7 +44,7 @@ public class SwerveModule {
 
     public SwerveModuleState getState() {
         double velocity = m_driveMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerWheelRotation
-                / (m_driveMotor.getStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0) / 1000.0) * 2 * Math.PI
+                * (1000.0 / m_driveMotor.getStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0)) * 2 * Math.PI
                 * Constants.kWheelRadius;
         double angle = m_steeringMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerSteeringRotation * 2
                 * Math.PI;
@@ -69,9 +69,10 @@ public class SwerveModule {
         Rotation2d rot = new Rotation2d(angle);
 
         SwerveModuleState state = SwerveModuleState.optimize(setpoint, rot);
-        m_driveMotor.set(ControlMode.Velocity, state.speedMetersPerSecond * Constants.kEncoderTicksPerWheelRotation
-                * (1000.0 / m_driveMotor.getStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0)) / (2 * Math.PI)
-                / Constants.kWheelRadius);
+        m_driveMotor.set(ControlMode.Velocity,
+                state.speedMetersPerSecond / Constants.kWheelRadius / 2 / Math.PI
+                        * Constants.kEncoderTicksPerWheelRotation
+                        / (1000.0 / m_driveMotor.getStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0)));
         m_steeringMotor.set(ControlMode.Position,
                 (state.angle.getRadians() - m_angleOffset) / (2 * Math.PI)
                         * Constants.kEncoderTicksPerSteeringRotation);

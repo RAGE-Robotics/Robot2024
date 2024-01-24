@@ -2,7 +2,7 @@ package com.ragerobotics.robot2024;
 
 public class Constants {
     public static final double kWheelRadius = 0.0254; // meters
-    public static final double kEncoderTicksPerWheelRotation = 1024.0 * 6.75;
+    public static final double kEncoderTicksPerWheelRotation = 2048.0 * 6.75 / 2;
     public static final double kEncoderTicksPerSteeringRotation = 4096.0;
     public static final double kModuleCenterDistance = 0.288925; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
