@@ -6,6 +6,7 @@ package com.ragerobotics.robot2024;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -17,8 +18,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 public class SwerveModule {
     private Translation2d m_loc;
     public TalonFX m_driveMotor;
-    private TalonSRX m_steeringMotor;
-    private double m_angleOffset;
+    public TalonSRX m_steeringMotor;
+    public double m_angleOffset;
 
     public SwerveModule(Translation2d loc, TalonFX driveMotor, TalonSRX steeringMotor, double angleOffset) {
         m_loc = loc;
@@ -42,13 +43,13 @@ public class SwerveModule {
     }
 
     public SwerveModuleState getState() {
-        double distance = m_driveMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerWheelRotation
-                / (m_driveMotor.getStatusFramePeriod(0) / 1000.0) * 2 * Math.PI * Constants.kWheelRadius;
+        double velocity = m_driveMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerWheelRotation
+                / (m_driveMotor.getStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0) / 1000.0) * 2 * Math.PI
+                * Constants.kWheelRadius;
         double angle = m_steeringMotor.getSelectedSensorVelocity() / Constants.kEncoderTicksPerSteeringRotation * 2
-                * Math.PI
-                + m_angleOffset;
+                * Math.PI;
 
-        return new SwerveModuleState(distance, new Rotation2d(angle));
+        return new SwerveModuleState(velocity, new Rotation2d(angle));
     }
 
     public SwerveModulePosition getPosition() {
@@ -68,10 +69,11 @@ public class SwerveModule {
         Rotation2d rot = new Rotation2d(angle);
 
         SwerveModuleState state = SwerveModuleState.optimize(setpoint, rot);
-        m_driveMotor.set(ControlMode.Velocity, state.speedMetersPerSecond
-                * (1000.0 / m_driveMotor.getStatusFramePeriod(0)) * Constants.kEncoderTicksPerWheelRotation);
+        m_driveMotor.set(ControlMode.Velocity, state.speedMetersPerSecond * Constants.kEncoderTicksPerWheelRotation
+                * (1000.0 / m_driveMotor.getStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0)) / (2 * Math.PI)
+                / Constants.kWheelRadius);
         m_steeringMotor.set(ControlMode.Position,
-                (state.angle.getRadians() + m_angleOffset) / (2 * Math.PI)
+                (state.angle.getRadians() - m_angleOffset) / (2 * Math.PI)
                         * Constants.kEncoderTicksPerSteeringRotation);
     }
 

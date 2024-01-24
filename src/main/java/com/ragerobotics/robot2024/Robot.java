@@ -81,7 +81,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         double vx = -m_driverController.getLeftY();
-        double vy = m_driverController.getLeftX();
+        double vy = -m_driverController.getLeftX();
         double rot = m_driverController.getRightX();
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
 

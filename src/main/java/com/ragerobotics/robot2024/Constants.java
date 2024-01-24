@@ -22,15 +22,17 @@ public class Constants {
     public static final double kBackLeftAngleOffset = -1.8039614065535141;
     public static final double kBackRightAngleOffset = 4.063515107109064;
 
-    public static final double kDriveP = 0.0;
+    public static final double kDriveP = 0.01;
     public static final double kDriveI = 0.0;
     public static final double kDriveD = 0.0;
     public static final double kDriveF = 0.0;
 
-    public static final double kSteeringP = 0.1;
-    public static final double kSteeringI = 0.0;
-    public static final double kSteeringD = 0.0;
+    public static final double kSteeringP = 0.3;
+    public static final double kSteeringI = 0.001;
+    public static final double kSteeringD = 1.0;
     public static final double kSteeringF = 0.0;
 
     public static final int kDriverController = 0;
+
+    public static final int kTalonStatusPeriod = 100;
 }
