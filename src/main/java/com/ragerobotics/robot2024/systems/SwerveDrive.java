@@ -45,17 +45,17 @@ public class SwerveDrive implements ISystem {
                         Constants.kFrontLeftAngleOffset);
         private SwerveModule m_frontRightModule = new SwerveModule(
                         new Translation2d(Constants.kModuleCenterDistance, -Constants.kModuleCenterDistance),
-                        Util.makeTalonFX(Constants.kFrontRightDriveMotor, true, true),
+                        Util.makeTalonFX(Constants.kFrontRightDriveMotor, false, false),
                         Util.makeTalonSRX(Constants.kFrontRightSteeringMotor, false, true, false, true),
                         Constants.kFrontRightAngleOffset);
         private SwerveModule m_backLeftModule = new SwerveModule(
                         new Translation2d(-Constants.kModuleCenterDistance, Constants.kModuleCenterDistance),
-                        Util.makeTalonFX(Constants.kBackLeftDriveMotor, true, true),
+                        Util.makeTalonFX(Constants.kBackLeftDriveMotor, false, false),
                         Util.makeTalonSRX(Constants.kBackLeftSteeringMotor, false, true, false, true),
                         Constants.kBackLeftAngleOffset);
         private SwerveModule m_backRightModule = new SwerveModule(
                         new Translation2d(-Constants.kModuleCenterDistance, -Constants.kModuleCenterDistance),
-                        Util.makeTalonFX(Constants.kBackRightDriveMotor, true, true),
+                        Util.makeTalonFX(Constants.kBackRightDriveMotor, false, false),
                         Util.makeTalonSRX(Constants.kBackRightSteeringMotor, false, true, false, true),
                         Constants.kBackRightAngleOffset);
 

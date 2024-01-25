@@ -82,7 +82,23 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double vx = -m_driverController.getLeftY();
         double vy = -m_driverController.getLeftX();
-        double rot = m_driverController.getRightX();
+
+        boolean negative = vx < 0;
+        vx *= vx;
+        if (negative) {
+            vx *= -1;
+        }
+
+        negative = vy < 0;
+        vy *= vy;
+        if (negative) {
+            vy *= -1;
+        }
+
+        vx *= Constants.kMaxV;
+        vy *= Constants.kMaxV;
+
+        double rot = -m_driverController.getRightX();
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
 
         double timestamp = Timer.getFPGATimestamp();
