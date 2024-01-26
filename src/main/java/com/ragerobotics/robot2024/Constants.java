@@ -7,6 +7,7 @@ public class Constants {
     public static final double kModuleCenterDistance = 0.288925; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
     public static final double kMaxV = 1.0; // m/s
+    public static final double kTurningFactor = 1.0;
 
     public static final int kFrontLeftDriveMotor = 14;
     public static final int kFrontLeftSteeringMotor = 11;
@@ -17,10 +18,10 @@ public class Constants {
     public static final int kBackRightDriveMotor = 3;
     public static final int kBackRightSteeringMotor = 7;
 
-    public static final double kFrontLeftAngleOffset = 0.11351457830353745;
-    public static final double kFrontRightAngleOffset = -4.706253057233147;
-    public static final double kBackLeftAngleOffset = -4.382583110989277;
-    public static final double kBackRightAngleOffset = -0.6350680461846554;
+    public static final double kFrontLeftAngleOffset = -0.12885438618239387;
+    public static final double kFrontRightAngleOffset = -3.034213998437798;
+    public static final double kBackLeftAngleOffset = -3.9975539332299808;
+    public static final double kBackRightAngleOffset = -0.34974761963792617;
 
     public static final double kDriveP = 0.01;
     public static final double kDriveI = 0.0;
