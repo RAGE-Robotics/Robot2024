@@ -6,8 +6,9 @@ public class Constants {
     public static final double kEncoderTicksPerSteeringRotation = 4096.0;
     public static final double kModuleCenterDistance = 0.288925; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
-    public static final double kMaxV = 1.0; // m/s
-    public static final double kTurningFactor = 1.0;
+    public static final double kMaxV = 3.0; // m/s
+    public static final double kMaxDriverV = 1.25; // m/s
+    public static final double kTurningFactor = 2.0;
 
     public static final int kFrontLeftDriveMotor = 14;
     public static final int kFrontLeftSteeringMotor = 11;
@@ -28,9 +29,9 @@ public class Constants {
     public static final double kDriveD = 0.01;
     public static final double kDriveF = 0.05;
 
-    public static final double kSteeringP = 0.3;
+    public static final double kSteeringP = 0.5;
     public static final double kSteeringI = 0.001;
-    public static final double kSteeringD = 1.0;
+    public static final double kSteeringD = 0.1;
     public static final double kSteeringF = 0.0;
 
     public static final int kDriverController = 0;

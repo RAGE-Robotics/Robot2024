@@ -95,10 +95,16 @@ public class Robot extends TimedRobot {
             vy *= -1;
         }
 
-        vx *= Constants.kMaxV;
-        vy *= Constants.kMaxV;
+        vx *= Constants.kMaxDriverV;
+        vy *= Constants.kMaxDriverV;
 
         double rot = -m_driverController.getRightX() * Constants.kTurningFactor;
+        negative = rot < 0;
+        rot *= rot;
+        if (negative) {
+            rot *= -1;
+        }
+
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
 
         double timestamp = Timer.getFPGATimestamp();
