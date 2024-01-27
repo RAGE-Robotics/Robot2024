@@ -4,6 +4,7 @@
 
 package com.ragerobotics.robot2024.systems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot;
@@ -76,6 +77,18 @@ public class SwerveDrive implements ISystem {
 
         private SwerveDrive() {
                 set(Mode.Disabled, 0, 0, 0);
+        }
+
+        public Pose2d getPose() {
+                return m_poseEstimator.getEstimatedPosition();
+        }
+
+        public void resetPose(Pose2d pose) {
+                m_poseEstimator.resetPosition(m_navx.getRotation2d(),
+                                new SwerveModulePosition[] { m_frontLeftModule.getPosition(),
+                                                m_frontRightModule.getPosition(),
+                                                m_backLeftModule.getPosition(), m_backRightModule.getPosition() },
+                                pose);
         }
 
         public void set(Mode mode, double vx, double vy, double rot) {

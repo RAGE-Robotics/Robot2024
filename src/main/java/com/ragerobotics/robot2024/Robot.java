@@ -2,11 +2,16 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
+import com.ragerobotics.control.Path;
 import com.ragerobotics.robot2024.auto.DoNothing;
+import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.systems.ISystem;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -20,7 +25,8 @@ public class Robot extends TimedRobot {
 
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
 
-    private ITask m_autoTask = new DoNothing();
+    private ITask m_autoTask = new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),
+            new Pose2d(new Translation2d(1, 0), new Rotation2d(0))), true);
 
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
@@ -63,7 +69,11 @@ public class Robot extends TimedRobot {
         double timestamp = Timer.getFPGATimestamp();
 
         if (m_autoTask != null) {
-            m_autoTask.onUpdate(timestamp);
+            if (!m_autoTask.isDone()) {
+                m_autoTask.onUpdate(timestamp);
+            } else {
+                m_autoTask = new DoNothing();
+            }
         }
 
         for (ISystem system : m_systems) {

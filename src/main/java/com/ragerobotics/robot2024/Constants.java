@@ -36,5 +36,21 @@ public class Constants {
 
     public static final int kDriverController = 0;
 
-    public static final int kTalonStatusPeriod = 100;
+    public static final int kTalonStatusPeriod = 100; // ms
+
+    public static final double kPathFollowingTolerance = 0.5; // m
+    public static final double kPathFollowingRampTime = 2.0; // s
+    public static final double kPathFollowingLookAheadRadius = 0.1; // m
+    public static final double kPathFollowingMaxV = 1.5; // m/s
+    public static final double kPathFollowingMaxRotV = 2.0; // rad/s;
+
+    public static final double kPathFollowingPositionP = 10.0;
+    public static final double kPathFollowingPositionI = 0.0;
+    public static final double kPathFollowingPositionD = 0.0;
+
+    public static final double kPathFollowingAngleP = 5.0;
+    public static final double kPathFollowingAngleI = 0.0;
+    public static final double kPathFollowingAngleD = 0.0;
+
+    public static final double kEpsilon = 1e-6;
 }
