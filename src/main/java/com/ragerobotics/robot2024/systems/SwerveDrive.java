@@ -131,6 +131,12 @@ public class SwerveDrive implements ISystem {
                         m_frontRightModule.drive(states[1]);
                         m_backLeftModule.drive(states[2]);
                         m_backRightModule.drive(states[3]);
+                } else {
+                        SwerveModuleState state = new SwerveModuleState(0, new Rotation2d(0));
+                        m_frontLeftModule.drive(state);
+                        m_frontRightModule.drive(state);
+                        m_backLeftModule.drive(state);
+                        m_backRightModule.drive(state);
                 }
         }
 }
