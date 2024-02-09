@@ -1,3 +1,4 @@
+//Add intake motor CAN ID's (lines 58 59)
 package com.ragerobotics.robot2024;
 
 public class Constants {
@@ -53,4 +54,7 @@ public class Constants {
     public static final double kPathFollowingAngleD = 0.0;
 
     public static final double kEpsilon = 1e-6;
+
+    public static final int kIntakeBackCanID = 1; //TEMP ID's CHANGE (top of file)
+    public static final int kIntakeFrontCanID = 2; //CHANGE THIS TOO (top of file)
 }
