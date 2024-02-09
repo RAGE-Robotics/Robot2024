@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.DigitalInput; //wait wpi as in the school what that
 
 
 public class IntakeSystem {
-        private TalonSRX m_MotorBack = Util.makeTalonSRX(Constants.kIntakeBackCanId, false, false, false, false); //even falses make a true
-        private TalonSRX m_MotorFront = Util.makeTalonSRX(Constants.kIntakeFrontCanId, false, false, false, false);
+        private TalonSRX m_MotorBack = Util.makeTalonSRX(Constants.kIntakeBackCanID, false, false, false, false); //even falses make a true
+        private TalonSRX m_MotorFront = Util.makeTalonSRX(Constants.kIntakeFrontCanID, false, false, false, false);
 
         public void SpinMotors(double demand) { // Remove parameter if there is only one speed.
                 m_MotorFront.set(ControlMode.Velocity, demand);
