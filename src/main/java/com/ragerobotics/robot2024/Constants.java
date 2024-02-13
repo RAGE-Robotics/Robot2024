@@ -57,4 +57,5 @@ public class Constants {
 
     public static final int kIntakeBackCanID = 1; //TEMP ID's CHANGE (top of file)
     public static final int kIntakeFrontCanID = 2; //CHANGE THIS TOO (top of file)
+    public static final int kIntakeSensorChannel = 1; //TEMP :333333333333333333
 }
