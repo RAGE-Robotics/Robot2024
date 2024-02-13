@@ -13,11 +13,11 @@ public class Constants {
     public static final int kFrontLeftDriveMotor = 14;
     public static final int kFrontLeftSteeringMotor = 11;
     public static final int kFrontRightDriveMotor = 1;
-    public static final int kFrontRightSteeringMotor = 10;
+    public static final int kFrontRightSteeringMotor = 7;
     public static final int kBackLeftDriveMotor = 13;
     public static final int kBackLeftSteeringMotor = 4;
     public static final int kBackRightDriveMotor = 3;
-    public static final int kBackRightSteeringMotor = 7;
+    public static final int kBackRightSteeringMotor = 10;
 
     public static final double kFrontLeftAngleOffset = -0.12885438618239387;
     public static final double kFrontRightAngleOffset = -3.034213998437798;
