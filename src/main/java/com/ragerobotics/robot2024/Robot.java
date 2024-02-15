@@ -6,7 +6,9 @@ import com.ragerobotics.lib.control.Path;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
+import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.ISystem;
+import com.ragerobotics.robot2024.systems.Intake;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -34,6 +36,8 @@ public class Robot extends TimedRobot {
 
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
+        m_systems.add(Intake.getInstance());
+        m_systems.add(Climber.getInstance());
 
         m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
     }
@@ -98,30 +102,35 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double vx = -m_driverController.getLeftY();
         double vy = -m_driverController.getLeftX();
-
         boolean negative = vx < 0;
         vx *= vx;
         if (negative) {
             vx *= -1;
         }
-
         negative = vy < 0;
         vy *= vy;
         if (negative) {
             vy *= -1;
         }
-
         vx *= Constants.kMaxDriverV;
         vy *= Constants.kMaxDriverV;
-
         double rot = -m_driverController.getRightX() * Constants.kTurningFactor;
         negative = rot < 0;
         rot *= rot;
         if (negative) {
             rot *= -1;
         }
-
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
+
+        double intakeDemand = m_driverController.getLeftTriggerAxis();
+        Intake.getInstance().intake(intakeDemand);
+
+        if (m_driverController.getAButton()) {
+            Climber.getInstance().retract();
+        }
+        if (m_driverController.getYButton()) {
+            Climber.getInstance().extend();
+        }
 
         double timestamp = Timer.getFPGATimestamp();
         for (ISystem system : m_systems) {

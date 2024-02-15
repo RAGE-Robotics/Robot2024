@@ -4,7 +4,6 @@
 
 package com.ragerobotics.robot2024.systems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot;
