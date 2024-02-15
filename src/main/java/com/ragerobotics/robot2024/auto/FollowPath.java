@@ -1,7 +1,7 @@
 package com.ragerobotics.robot2024.auto;
 
-import com.ragerobotics.control.Path;
-import com.ragerobotics.control.PidController;
+import com.ragerobotics.lib.control.Path;
+import com.ragerobotics.lib.control.PidController;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
 import com.ragerobotics.robot2024.systems.SwerveDrive.Mode;

@@ -1,4 +1,4 @@
-package com.ragerobotics.control;
+package com.ragerobotics.lib.control;
 
 import java.util.ArrayList;
 

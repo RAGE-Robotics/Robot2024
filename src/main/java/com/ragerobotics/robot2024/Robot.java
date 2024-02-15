@@ -2,7 +2,7 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
-import com.ragerobotics.control.Path;
+import com.ragerobotics.lib.control.Path;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
