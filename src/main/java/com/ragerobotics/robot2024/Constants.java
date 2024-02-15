@@ -53,4 +53,7 @@ public class Constants {
     public static final double kPathFollowingAngleD = 0.0;
 
     public static final double kEpsilon = 1e-6;
+
+    public static final double kMinPressure = 100;
+    public static final double kMaxPressure = 110;
 }
