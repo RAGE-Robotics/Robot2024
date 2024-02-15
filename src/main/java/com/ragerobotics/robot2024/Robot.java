@@ -122,7 +122,7 @@ public class Robot extends TimedRobot {
         }
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
 
-        double intakeDemand = m_driverController.getLeftTriggerAxis();
+        double intakeDemand = m_driverController.getLeftTriggerAxis() * Constants.kIntakeGain;
         Intake.getInstance().intake(intakeDemand);
 
         if (m_driverController.getAButton()) {

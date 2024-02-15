@@ -2,6 +2,7 @@ package com.ragerobotics.robot2024.systems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot.Mode;
 import com.ragerobotics.robot2024.Util;
@@ -19,8 +20,8 @@ public class Intake implements ISystem {
                 return instance;
         }
 
-        private TalonSRX m_MotorBack = Util.makeTalonSRX(Constants.kIntakeBackCanID, false, false, false, false);
-        private TalonSRX m_MotorFront = Util.makeTalonSRX(Constants.kIntakeFrontCanID, false, false, false, false);
+        private VictorSPX m_MotorBack = Util.makeVictorSPX(Constants.kIntakeBackCanID, true);
+        private TalonSRX m_MotorFront = Util.makeTalonSRX(Constants.kIntakeFrontCanID, true, false, false, false);
         private DigitalInput m_IntakeSensor = new DigitalInput(Constants.kIntakeSensorChannel);
 
         private double m_demand = 0;
@@ -35,7 +36,7 @@ public class Intake implements ISystem {
 
         @Override
         public void onUpdate(double timestamp, Mode mode) {
-                m_MotorFront.set(ControlMode.Velocity, m_IntakeSensor.get() ? 0 : m_demand);
-                m_MotorBack.set(ControlMode.Velocity, m_IntakeSensor.get() ? 0 : m_demand);
+                m_MotorFront.set(ControlMode.PercentOutput, m_IntakeSensor.get() ? m_demand : 0);
+                m_MotorBack.set(ControlMode.PercentOutput, m_IntakeSensor.get() ? m_demand : 0);
         }
 }

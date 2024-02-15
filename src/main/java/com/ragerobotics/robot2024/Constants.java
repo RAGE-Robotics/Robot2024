@@ -58,6 +58,7 @@ public class Constants {
     public static final int kIntakeBackCanID = 12;
     public static final int kIntakeFrontCanID = 5;
     public static final int kIntakeSensorChannel = 0;
+    public static final double kIntakeGain = 0.75;
 
     public static final double kMinPressure = 100;
     public static final double kMaxPressure = 110;
