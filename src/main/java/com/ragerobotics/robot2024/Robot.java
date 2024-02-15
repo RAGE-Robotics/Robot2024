@@ -2,7 +2,7 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
-import com.ragerobotics.control.Path;
+import com.ragerobotics.lib.control.Path;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
@@ -12,6 +12,8 @@ import com.ragerobotics.robot2024.systems.SwerveDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
@@ -28,8 +30,12 @@ public class Robot extends TimedRobot {
     private ITask m_autoTask = new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),
             new Pose2d(new Translation2d(1, 0), new Rotation2d(0))), true);
 
+    private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
+
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
+
+        m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
     }
 
     @Override

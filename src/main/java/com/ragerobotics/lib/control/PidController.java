@@ -1,4 +1,4 @@
-package com.ragerobotics.control;
+package com.ragerobotics.lib.control;
 
 public class PidController {
     private double m_kP, m_kI, m_kD, m_dt, m_I, m_oldE;

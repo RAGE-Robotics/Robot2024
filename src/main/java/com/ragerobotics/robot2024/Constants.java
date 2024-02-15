@@ -2,10 +2,10 @@
 package com.ragerobotics.robot2024;
 
 public class Constants {
-    public static final double kWheelRadius = 0.0254; // meters
+    public static final double kWheelRadius = 0.0508; // meters
     public static final double kEncoderTicksPerWheelRotation = 2048.0 * 6.75;
     public static final double kEncoderTicksPerSteeringRotation = 4096.0;
-    public static final double kModuleCenterDistance = 0.288925; // meters
+    public static final double kModuleCenterDistance = 0.31115; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
     public static final double kMaxV = 3.0; // m/s
     public static final double kMaxDriverV = 1.25; // m/s
@@ -55,7 +55,11 @@ public class Constants {
 
     public static final double kEpsilon = 1e-6;
 
-    public static final int kIntakeBackCanID = 1; //TEMP ID's CHANGE (top of file)
-    public static final int kIntakeFrontCanID = 2; //CHANGE THIS TOO (top of file)
-    public static final int kIntakeSensorChannel = 1; //TEMP :333333333333333333
+    public static final int kIntakeBackCanID = 12;
+    public static final int kIntakeFrontCanID = 5;
+    public static final int kIntakeSensorChannel = 0;
+
+    public static final double kMinPressure = 100;
+    public static final double kMaxPressure = 110;
+    public static final int kClimberSoldenoid = 0;
 }
