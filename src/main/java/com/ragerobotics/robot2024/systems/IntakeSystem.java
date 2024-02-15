@@ -13,7 +13,7 @@ public class IntakeSystem {
         private TalonSRX m_MotorBack = Util.makeTalonSRX(Constants.kIntakeBackCanID, false, false, false, false); //even falses make a true
         private TalonSRX m_MotorFront = Util.makeTalonSRX(Constants.kIntakeFrontCanID, false, false, false, false);
         private DigitalInput m_IntakeSensor = new DigitalInput(Constants.kIntakeSensorChannel);
-        private boolean noteInIntake = false;
+        
         public void SpinMotors(double demand) { // Remove parameter if there is only one speed.
                 m_MotorFront.set(ControlMode.Velocity, demand);
                 m_MotorBack.set(ControlMode.Velocity, demand); // Output value is position change / 100ms. Motor Dependent
