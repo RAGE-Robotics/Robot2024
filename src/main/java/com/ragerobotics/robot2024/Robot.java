@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
     public enum Mode {
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-
+        SmartDashboard.putBoolean("intake_sensor_tripped", Intake.getInstance().intakeSensorTripped());
     }
 
     @Override

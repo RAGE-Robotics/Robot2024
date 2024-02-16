@@ -39,4 +39,8 @@ public class Intake implements ISystem {
                 m_MotorFront.set(ControlMode.PercentOutput, m_IntakeSensor.get() ? m_demand : 0);
                 m_MotorBack.set(ControlMode.PercentOutput, m_IntakeSensor.get() ? m_demand : 0);
         }
+
+        public boolean intakeSensorTripped() {
+                return !m_IntakeSensor.get();
+        }
 }
