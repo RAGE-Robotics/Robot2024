@@ -83,6 +83,7 @@ public class Robot extends TimedRobot {
             if (!m_autoTask.isDone()) {
                 m_autoTask.onUpdate(timestamp);
             } else {
+                m_autoTask.onStop();
                 m_autoTask = new DoNothing();
             }
         }
