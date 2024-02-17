@@ -1,7 +1,6 @@
 package com.ragerobotics.robot2024.systems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot.Mode;
@@ -20,8 +19,8 @@ public class Intake implements ISystem {
                 return instance;
         }
 
-        private VictorSPX m_MotorBack = Util.makeVictorSPX(Constants.kIntakeBackCanID, true);
-        private TalonSRX m_MotorFront = Util.makeTalonSRX(Constants.kIntakeFrontCanID, true, false, false, false);
+        private VictorSPX m_MotorBack = Util.makeVictorSPX(Constants.kIntakeBackCanId, true);
+        private VictorSPX m_MotorFront = Util.makeVictorSPX(Constants.kIntakeFrontCanId, true);
         private DigitalInput m_IntakeSensor = new DigitalInput(Constants.kIntakeSensorChannel);
 
         private double m_demand = 0;

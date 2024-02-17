@@ -25,14 +25,14 @@ public class Constants {
     public static final double kBackLeftAngleOffset = -3.9975539332299808;
     public static final double kBackRightAngleOffset = -0.34974761963792617;
 
-    public static final double kDriveP = 0.01;
+    public static final double kDriveP = 0.0;
     public static final double kDriveI = 0.0;
-    public static final double kDriveD = 0.01;
-    public static final double kDriveF = 0.05;
+    public static final double kDriveD = 0.0;
+    public static final double kDriveF = 0.07;
 
     public static final double kSteeringP = 0.5;
-    public static final double kSteeringI = 0.001;
-    public static final double kSteeringD = 0.1;
+    public static final double kSteeringI = 0.002;
+    public static final double kSteeringD = 0.12;
     public static final double kSteeringF = 0.0;
 
     public static final int kDriverController = 0;
@@ -55,12 +55,17 @@ public class Constants {
 
     public static final double kEpsilon = 1e-6;
 
-    public static final int kIntakeBackCanID = 12;
-    public static final int kIntakeFrontCanID = 5;
-    public static final int kIntakeSensorChannel = 0;
+    public static final int kIntakeBackCanId = 12;
+    public static final int kIntakeFrontCanId = 16;
+    public static final int kIntakeSensorChannel = 3;
     public static final double kIntakeGain = 0.75;
 
     public static final double kMinPressure = 100;
     public static final double kMaxPressure = 110;
     public static final int kClimberSoldenoid = 0;
+
+    public static final double kRotationP = 0;
+    public static final double kRotationI = 0;
+    public static final double kRotationD = 0;
+    public static final double kRotationF = 0;
 }
