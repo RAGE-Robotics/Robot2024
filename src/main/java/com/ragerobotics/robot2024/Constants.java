@@ -39,7 +39,7 @@ public class Constants {
 
     public static final int kTalonStatusPeriod = 100; // ms
 
-    public static final double kPathFollowingTolerance = 0.5; // m
+    public static final double kPathFollowingTolerance = 0.25; // m
     public static final double kPathFollowingRampTime = 2.0; // s
     public static final double kPathFollowingLookAheadRadius = 0.1; // m
     public static final double kPathFollowingMaxV = 1.5; // m/s
