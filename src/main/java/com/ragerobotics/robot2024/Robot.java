@@ -9,6 +9,7 @@ import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.ISystem;
 import com.ragerobotics.robot2024.systems.Intake;
+import com.ragerobotics.robot2024.systems.LEDs;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -35,6 +36,8 @@ public class Robot extends TimedRobot {
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 
+    LEDs m_led = new LEDs();
+
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
         m_systems.add(Intake.getInstance());
@@ -45,7 +48,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-
+    m_led.allianceColor();
     }
 
     @Override
@@ -91,6 +94,8 @@ public class Robot extends TimedRobot {
         for (ISystem system : m_systems) {
             system.onUpdate(timestamp, Mode.Auto);
         }
+
+        m_led.rainbowColors();
     }
 
     @Override
@@ -98,6 +103,8 @@ public class Robot extends TimedRobot {
         if (m_autoTask != null) {
             m_autoTask.onStop();
         }
+
+        m_led.allianceColor();
     }
 
     @Override
