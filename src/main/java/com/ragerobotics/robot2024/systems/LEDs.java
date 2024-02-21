@@ -2,25 +2,13 @@ package com.ragerobotics.robot2024.systems;
 
 import java.util.Optional;
 
-import com.ragerobotics.robot2024.Robot.Mode;
-
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class LEDs {
-    private static LEDs instance;
-
-    public static LEDs getInstance() {
-        if (instance == null) {
-            instance = new LEDs();
-        }
-
-        return instance;
-
-    }
-
+    
     AddressableLED m_led = new AddressableLED(0);
     AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(300);
 
@@ -63,6 +51,8 @@ public class LEDs {
         m_rainbowFirstPixelHue += 3;
 
         m_rainbowFirstPixelHue %= 180;
+
+        m_led.setData(m_ledBuffer);
 
      }
 }
