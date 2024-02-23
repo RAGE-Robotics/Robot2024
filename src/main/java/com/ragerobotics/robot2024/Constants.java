@@ -76,4 +76,5 @@ public class Constants {
     public static final int kDropperBeltMotorId = 30;
     public static final int kDropperRotatingMotorId = 31;
     public static final int kDropperRollerMotorId = 32;
+    public static final int kDropperSensorId = 2;
 }
