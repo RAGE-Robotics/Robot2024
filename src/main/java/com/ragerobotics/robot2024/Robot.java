@@ -7,6 +7,7 @@ import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.systems.Climber;
+import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
 import com.ragerobotics.robot2024.systems.Intake;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
         m_systems.add(SwerveDrive.getInstance());
         m_systems.add(Intake.getInstance());
         m_systems.add(Climber.getInstance());
+        m_systems.add(Dropper.getInstance());
 
         m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
     }
