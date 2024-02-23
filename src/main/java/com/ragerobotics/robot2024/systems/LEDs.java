@@ -2,19 +2,31 @@ package com.ragerobotics.robot2024.systems;
 
 import java.util.Optional;
 
+import com.ragerobotics.robot2024.Constants;
+import com.ragerobotics.robot2024.Robot.Mode;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-public class LEDs {
-    
-    AddressableLED m_led = new AddressableLED(0);
-    AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(300);
+public class LEDs implements ISystem {
+    private static LEDs instance;
 
-    int m_rainbowFirstPixelHue; 
+        public static LEDs getInstance() {
+                if (instance == null) {
+                        instance = new LEDs();
+                }
+
+                return instance;
+        }
+
+   static AddressableLED m_led = new AddressableLED(Constants.kLEDChannel);
+   static AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(600);
+
+    static int m_rainbowFirstPixelHue; 
     
-    Optional<Alliance> alliance = DriverStation.getAlliance();
+   static Optional<Alliance> alliance = DriverStation.getAlliance();
      
     public LEDs() {
         m_led.setLength(m_ledBuffer.getLength());
@@ -22,7 +34,7 @@ public class LEDs {
         m_led.start();
     }
 
-    public void allianceColor() {
+    public static void  allianceColor() {
 
         if (alliance.get() == Alliance.Red) {
         
@@ -41,7 +53,7 @@ public class LEDs {
         
      }
 
-     public void rainbowColors() {
+     public static void rainbowColors() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
 
@@ -55,4 +67,9 @@ public class LEDs {
         m_led.setData(m_ledBuffer);
 
      }
+
+     @Override
+        public void onUpdate(double timestamp, Mode mode) {
+            
+        }
 }

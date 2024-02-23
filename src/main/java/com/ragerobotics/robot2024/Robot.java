@@ -36,19 +36,18 @@ public class Robot extends TimedRobot {
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 
-    LEDs m_led = new LEDs();
-
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
         m_systems.add(Intake.getInstance());
         m_systems.add(Climber.getInstance());
+        m_systems.add(LEDs.getInstance());
 
         m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
     }
 
     @Override
     public void robotInit() {
-    m_led.allianceColor();
+    LEDs.allianceColor();
     }
 
     @Override
@@ -95,7 +94,7 @@ public class Robot extends TimedRobot {
             system.onUpdate(timestamp, Mode.Auto);
         }
 
-        m_led.rainbowColors();
+        LEDs.rainbowColors();
     }
 
     @Override
@@ -104,7 +103,7 @@ public class Robot extends TimedRobot {
             m_autoTask.onStop();
         }
 
-        m_led.allianceColor();
+        LEDs.allianceColor();
     }
 
     @Override
