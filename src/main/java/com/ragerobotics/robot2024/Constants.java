@@ -64,8 +64,16 @@ public class Constants {
     public static final double kMaxPressure = 110;
     public static final int kClimberSoldenoid = 0;
 
-    public static final double kRotationP = 0;
-    public static final double kRotationI = 0;
-    public static final double kRotationD = 0;
-    public static final double kRotationF = 0;
+    public static final double kDropperRotationP = 0;
+    public static final double kDropperRotationI = 0;
+    public static final double kDropperRotationD = 0;
+    public static final double kDropperRotationF = 0;
+
+    public static final double kDropperInPos = 0;
+    public static final double kDropperVertPos = 0;
+    public static final double kDropperGearRatio = 22.0 / 72.0;
+
+    public static final int kDropperBeltMotorId = 30;
+    public static final int kDropperRotatingMotorId = 31;
+    public static final int kDropperRollerMotorId = 32;
 }
