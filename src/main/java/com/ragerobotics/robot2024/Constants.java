@@ -73,12 +73,12 @@ public class Constants {
     public static final double kDropperVertPos = 2.25;
     public static final double kDropperGearRatio = 72.0 / 22.0;
     public static final double kDropperTicksPerRotation = 8192.0;
-    public static final double kDropperTolerance = 0.1;
+    public static final double kDropperTolerance = 0.2;
 
     public static final int kDropperBeltMotorId = 11;
     public static final int kDropperRotatingMotorId = 5;
     public static final int kDropperRollerMotorId = 15;
     public static final int kDropperSensorId = 1;
 
-    public static final double kTriggerDeadband = 0.75;
+    public static final double kTriggerDeadband = 0.05;
 }

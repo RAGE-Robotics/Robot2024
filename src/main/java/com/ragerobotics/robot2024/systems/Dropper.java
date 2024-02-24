@@ -83,6 +83,7 @@ public class Dropper implements ISystem {
                 m_rollerMotor.set(ControlMode.PercentOutput, 1.0);
                 m_beltMotor.set(ControlMode.PercentOutput, 1.0);
             } else {
+                m_rollerMotor.set(ControlMode.PercentOutput, 0);
                 m_beltMotor.set(ControlMode.PercentOutput, 0.3);
             }
             m_rotatingMotor.set(ControlMode.Position,
