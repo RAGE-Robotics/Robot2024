@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
     private ArrayList<ISystem> m_systems = new ArrayList<>();
 
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
+    private XboxController m_operatorController = new XboxController(Constants.kOperatorController);
 
     private ITask m_autoTask = new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),
             new Pose2d(new Translation2d(1, 0), new Rotation2d(0))), true);
@@ -127,13 +128,14 @@ public class Robot extends TimedRobot {
         }
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
 
-        double intakeDemand = m_driverController.getLeftTriggerAxis() * Constants.kIntakeGain;
+        double intakeDemand = Math.max(m_driverController.getLeftTriggerAxis(),
+                m_operatorController.getLeftTriggerAxis()) * Constants.kIntakeGain;
         Intake.getInstance().intake(intakeDemand);
 
-        if (m_driverController.getAButton()) {
+        if (m_driverController.getAButton() || m_operatorController.getAButton()) {
             Climber.getInstance().retract();
         }
-        if (m_driverController.getYButton()) {
+        if (m_driverController.getYButton() || m_operatorController.getYButton()) {
             Climber.getInstance().extend();
         }
 
@@ -144,11 +146,12 @@ public class Robot extends TimedRobot {
                 Dropper.getInstance().dropperStow();
             }
 
-            if (m_driverController.getPOV() == 0) {
+            if (m_driverController.getPOV() == 0 || m_operatorController.getPOV() == 0) {
                 Dropper.getInstance().dropperVertical();
-            } else if (m_driverController.getPOV() == 180) {
+            } else if (m_driverController.getPOV() == 180 || m_operatorController.getPOV() == 180) {
                 Dropper.getInstance().dropperStow();
-            } else if (m_driverController.getRightTriggerAxis() > Constants.kTriggerDeadband) {
+            } else if (Math.max(m_driverController.getRightTriggerAxis(),
+                    m_operatorController.getRightTriggerAxis()) > Constants.kTriggerDeadband) {
                 Dropper.getInstance().drop();
             } else if (Dropper.getInstance().getState() == Dropper.State.Dropping) {
                 Dropper.getInstance().dropperVertical();
