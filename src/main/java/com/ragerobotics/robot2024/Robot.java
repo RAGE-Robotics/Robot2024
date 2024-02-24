@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         SmartDashboard.putBoolean("intake_sensor_tripped", Intake.getInstance().intakeSensorTripped());
+        SmartDashboard.putBoolean("dropper_sensor_tripped", Dropper.getInstance().dropperSensorTripped());
     }
 
     @Override
@@ -134,6 +135,24 @@ public class Robot extends TimedRobot {
         }
         if (m_driverController.getYButton()) {
             Climber.getInstance().extend();
+        }
+
+        if (intakeDemand > Constants.kTriggerDeadband) {
+            Dropper.getInstance().transfer();
+        } else {
+            if (Dropper.getInstance().getState() == Dropper.State.Intaking) {
+                Dropper.getInstance().dropperStow();
+            }
+
+            if (m_driverController.getPOV() == 0) {
+                Dropper.getInstance().dropperVertical();
+            } else if (m_driverController.getPOV() == 180) {
+                Dropper.getInstance().dropperStow();
+            } else if (m_driverController.getRightTriggerAxis() > Constants.kTriggerDeadband) {
+                Dropper.getInstance().drop();
+            } else if (Dropper.getInstance().getState() == Dropper.State.Dropping) {
+                Dropper.getInstance().dropperVertical();
+            }
         }
 
         double timestamp = Timer.getFPGATimestamp();

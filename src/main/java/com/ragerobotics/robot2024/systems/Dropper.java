@@ -1,9 +1,8 @@
 package com.ragerobotics.robot2024.systems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Util;
 import com.ragerobotics.robot2024.Robot.Mode;
@@ -23,12 +22,12 @@ public class Dropper implements ISystem {
     }
 
     public enum State {
-        Stowed, Intaking, Holding, Up, Dropping
+        Stowed, Intaking, Up, Dropping
     }
 
-    private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, false, false, false, false);
-    private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, false, true, false, false);
-    private TalonSRX m_rollerMotor = Util.makeTalonSRX(Constants.kDropperRollerMotorId, false, false, false, false);
+    private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, true, false, false, false);
+    private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, true, true, true, false);
+    private VictorSPX m_rollerMotor = Util.makeVictorSPX(Constants.kDropperRollerMotorId, false);
 
     private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorId);
 
@@ -42,11 +41,7 @@ public class Dropper implements ISystem {
         m_state = State.Intaking;
     }
 
-    public void hold() {
-        m_state = State.Holding;
-    }
-
-    public void dropperVerticle() {
+    public void dropperVertical() {
         m_state = State.Up;
     }
 
@@ -59,9 +54,6 @@ public class Dropper implements ISystem {
         m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
         m_rotatingMotor.config_kD(0, Constants.kDropperRotationD);
         m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
-
-        m_rotatingMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector,
-                LimitSwitchNormal.NormallyClosed);
     }
 
     @Override
@@ -73,32 +65,50 @@ public class Dropper implements ISystem {
         }
 
         if (m_state == State.Intaking) {
-            m_beltMotor.set(ControlMode.PercentOutput, 1.0);
-            m_rollerMotor.set(ControlMode.PercentOutput, 0.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
-        }
-
-        if (m_state == State.Holding) {
-            m_beltMotor.set(ControlMode.PercentOutput, 0.1);
+            m_beltMotor.set(ControlMode.PercentOutput, dropperSensorTripped() ? 0 : 1.0);
             m_rollerMotor.set(ControlMode.PercentOutput, 0.0);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 
         if (m_state == State.Up) {
-            m_beltMotor.set(ControlMode.PercentOutput, -0.1);
+            m_beltMotor.set(ControlMode.PercentOutput, 0);
             m_rollerMotor.set(ControlMode.PercentOutput, 0.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperVertPos / 4096 * Constants.kDropperGearRatio);
+            m_rotatingMotor.set(ControlMode.Position,
+                    Constants.kDropperVertPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
+                            * Constants.kDropperGearRatio);
         }
 
         if (m_state == State.Dropping) {
-            m_beltMotor.set(ControlMode.PercentOutput, 1.0);
-            m_rollerMotor.set(ControlMode.PercentOutput, 1.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperVertPos / 4096 * Constants.kDropperGearRatio);
+            if (dropperUp()) {
+                m_rollerMotor.set(ControlMode.PercentOutput, 1.0);
+                m_beltMotor.set(ControlMode.PercentOutput, 1.0);
+            } else {
+                m_beltMotor.set(ControlMode.PercentOutput, 0.3);
+            }
+            m_rotatingMotor.set(ControlMode.Position,
+                    Constants.kDropperVertPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
+                            * Constants.kDropperGearRatio);
         }
 
     }
 
     public boolean dropperSensorTripped() {
         return !m_dropperSensor.get();
+    }
+
+    public boolean dropperStowed() {
+        double position = m_rotatingMotor.getSelectedSensorPosition() / Constants.kDropperTicksPerRotation
+                / Constants.kDropperGearRatio * 2 * Math.PI;
+        return Math.abs(position - Constants.kDropperInPos) < Constants.kDropperTolerance;
+    }
+
+    public boolean dropperUp() {
+        double position = m_rotatingMotor.getSelectedSensorPosition() / Constants.kDropperTicksPerRotation
+                / Constants.kDropperGearRatio * 2 * Math.PI;
+        return Math.abs(position - Constants.kDropperVertPos) < Constants.kDropperTolerance;
+    }
+
+    public State getState() {
+        return m_state;
     }
 }
