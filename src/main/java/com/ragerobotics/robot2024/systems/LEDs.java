@@ -68,6 +68,12 @@ public class LEDs implements ISystem {
 
      }
 
+     public static void whiteLights() {
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            m_ledBuffer.setRGB(i, 255, 255, 255);
+            }
+      }
+
      @Override
         public void onUpdate(double timestamp, Mode mode) {
             
