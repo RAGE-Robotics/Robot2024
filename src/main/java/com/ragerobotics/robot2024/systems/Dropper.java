@@ -29,7 +29,7 @@ public class Dropper implements ISystem {
     private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, true, true, true, false);
     private VictorSPX m_rollerMotor = Util.makeVictorSPX(Constants.kDropperRollerMotorId, false);
 
-    private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorId);
+    private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorChannel);
 
     private State m_state = State.Stowed;
 
