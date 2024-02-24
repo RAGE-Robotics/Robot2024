@@ -55,6 +55,9 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         SmartDashboard.putBoolean("intake_sensor_tripped", Intake.getInstance().intakeSensorTripped());
         SmartDashboard.putBoolean("dropper_sensor_tripped", Dropper.getInstance().dropperSensorTripped());
+        SmartDashboard.putNumber("x", SwerveDrive.getInstance().getPose().getX());
+        SmartDashboard.putNumber("y", SwerveDrive.getInstance().getPose().getY());
+        SmartDashboard.putNumber("heading", SwerveDrive.getInstance().getPose().getRotation().getRadians());
     }
 
     @Override
