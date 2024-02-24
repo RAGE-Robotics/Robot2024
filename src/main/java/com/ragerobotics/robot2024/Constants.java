@@ -1,4 +1,3 @@
-//Add intake motor CAN ID's (lines 58 59)
 package com.ragerobotics.robot2024;
 
 public class Constants {
