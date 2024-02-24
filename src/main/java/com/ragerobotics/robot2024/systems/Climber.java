@@ -3,8 +3,9 @@ package com.ragerobotics.robot2024.systems;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot.Mode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Climber implements ISystem {
     private static Climber instance;
@@ -17,7 +18,10 @@ public class Climber implements ISystem {
         return instance;
     }
 
-    private Solenoid m_solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.kClimberSoldenoid);
+    private DoubleSolenoid m_solenoidA = new DoubleSolenoid(PneumaticsModuleType.REVPH,
+            Constants.kClimberSolenoidForwardA, Constants.kClimberSolenoidReverseA);
+    private DoubleSolenoid m_solenoidB = new DoubleSolenoid(PneumaticsModuleType.REVPH,
+            Constants.kClimberSolenoidForwardB, Constants.kClimberSolenoidReverseB);
     private boolean m_state = false;
 
     private Climber() {
@@ -34,6 +38,7 @@ public class Climber implements ISystem {
 
     @Override
     public void onUpdate(double timestamp, Mode mode) {
-        m_solenoid.set(m_state);
+        m_solenoidA.set(m_state ? Value.kForward : Value.kReverse);
+        m_solenoidB.set(m_state ? Value.kForward : Value.kReverse);
     }
 }

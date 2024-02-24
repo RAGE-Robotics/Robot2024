@@ -62,7 +62,10 @@ public class Constants {
 
     public static final double kMinPressure = 100;
     public static final double kMaxPressure = 110;
-    public static final int kClimberSoldenoid = 0;
+    public static final int kClimberSolenoidForwardA = 0;
+    public static final int kClimberSolenoidReverseA = 1;
+    public static final int kClimberSolenoidForwardB = 2;
+    public static final int kClimberSolenoidReverseB = 3;
 
     public static final double kDropperRotationP = 0.09;
     public static final double kDropperRotationI = 0;
