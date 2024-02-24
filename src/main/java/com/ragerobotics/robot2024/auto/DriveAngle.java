@@ -7,8 +7,8 @@ import com.ragerobotics.robot2024.systems.SwerveDrive.Mode;
 
 public class DriveAngle implements ITask {
     private double m_angle;
-    private PidController m_pidRot = new PidController(Constants.kPathFollowingAngleP,
-            Constants.kPathFollowingAngleI, Constants.kPathFollowingAngleD, Constants.kDt);
+    private PidController m_pidRot = new PidController(Constants.kAngleP, Constants.kAngleI, Constants.kAngleD,
+            Constants.kDt);
 
     public DriveAngle(double angle) {
         m_angle = angle;
@@ -26,6 +26,9 @@ public class DriveAngle implements ITask {
             angleSetpoint -= 2 * Math.PI;
         }
         double rot = m_pidRot.update(angleSetpoint, currentAngle);
+
+        boolean negative = rot < 0;
+        rot = (negative ? -1 : 1) * Math.min(Math.abs(rot), Constants.kPathFollowingMaxRotV);
 
         SwerveDrive.getInstance().set(Mode.Velocity, 0, 0, rot);
     }

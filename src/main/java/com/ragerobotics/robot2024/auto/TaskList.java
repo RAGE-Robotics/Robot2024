@@ -29,6 +29,10 @@ public class TaskList implements ITask {
             if (m_tasks.get(m_i).isDone()) {
                 m_tasks.get(m_i).onStop();
                 m_i++;
+
+                if (m_i < m_tasks.size()) {
+                    m_tasks.get(m_i).onStart(timestamp);
+                }
             }
         }
     }

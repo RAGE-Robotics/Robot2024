@@ -2,9 +2,8 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
-import com.ragerobotics.lib.control.Path;
+import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
-import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
@@ -32,8 +31,7 @@ public class Robot extends TimedRobot {
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
     private XboxController m_operatorController = new XboxController(Constants.kOperatorController);
 
-    private ITask m_autoTask = new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)),
-            new Pose2d(new Translation2d(1, 0), new Rotation2d(0))), true);
+    private ITask m_autoTask = new CrossLine();
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 
@@ -58,6 +56,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("x", SwerveDrive.getInstance().getPose().getX());
         SmartDashboard.putNumber("y", SwerveDrive.getInstance().getPose().getY());
         SmartDashboard.putNumber("heading", SwerveDrive.getInstance().getPose().getRotation().getRadians());
+        SmartDashboard.putNumber("pressure", m_compressor.getPressure());
     }
 
     @Override
@@ -109,6 +108,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        if (m_driverController.getLeftBumper() && m_driverController.getRightBumper()) {
+            SwerveDrive.getInstance().resetPose(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
+        }
+
         double vx = -m_driverController.getLeftY();
         double vy = -m_driverController.getLeftX();
         boolean negative = vx < 0;

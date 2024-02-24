@@ -39,19 +39,23 @@ public class Constants {
 
     public static final int kTalonStatusPeriod = 100; // ms
 
-    public static final double kPathFollowingTolerance = 0.25; // m
+    public static final double kPathFollowingTolerance = 0.05; // m
     public static final double kPathFollowingRampTime = 2.0; // s
     public static final double kPathFollowingLookAheadRadius = 0.1; // m
     public static final double kPathFollowingMaxV = 1.5; // m/s
     public static final double kPathFollowingMaxRotV = 2.0; // rad/s;
 
-    public static final double kPathFollowingPositionP = 10.0;
+    public static final double kPathFollowingPositionP = 5.0;
     public static final double kPathFollowingPositionI = 0.0;
-    public static final double kPathFollowingPositionD = 0.0;
+    public static final double kPathFollowingPositionD = 0.5;
 
     public static final double kPathFollowingAngleP = 5.0;
     public static final double kPathFollowingAngleI = 0.0;
-    public static final double kPathFollowingAngleD = 0.0;
+    public static final double kPathFollowingAngleD = 0.1;
+
+    public static final double kAngleP = 5.0;
+    public static final double kAngleI = 0.0;
+    public static final double kAngleD = 0.1;
 
     public static final double kEpsilon = 1e-6;
 
@@ -61,11 +65,11 @@ public class Constants {
     public static final double kIntakeGain = 0.75;
 
     public static final double kMinPressure = 100;
-    public static final double kMaxPressure = 110;
-    public static final int kClimberSolenoidForwardA = 0;
+    public static final double kMaxPressure = 120;
+    public static final int kClimberSolenoidForwardA = 3;
     public static final int kClimberSolenoidReverseA = 1;
-    public static final int kClimberSolenoidForwardB = 2;
-    public static final int kClimberSolenoidReverseB = 3;
+    public static final int kClimberSolenoidForwardB = 4;
+    public static final int kClimberSolenoidReverseB = 2;
 
     public static final double kDropperRotationP = 0.09;
     public static final double kDropperRotationI = 0;
