@@ -87,4 +87,6 @@ public class Constants {
 
     public static final int kWallSensorChannelA = 0;
     public static final int kWallSensorChannelB = 2;
+
+    public static final double kDriveAngleTolerance = 0.25;
 }
