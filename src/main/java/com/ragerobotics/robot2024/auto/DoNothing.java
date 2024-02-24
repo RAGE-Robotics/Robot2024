@@ -6,7 +6,7 @@ public class DoNothing implements ITask {
     }
 
     public void onUpdate(double timestamp) {
-        
+
     }
 
     public boolean isDone() {
