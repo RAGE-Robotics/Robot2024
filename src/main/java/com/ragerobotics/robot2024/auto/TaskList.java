@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class TaskList implements ITask {
     private ArrayList<ITask> m_tasks = new ArrayList<ITask>();
     private int m_i = 0;
-    private double m_startTime = -1;
 
     public TaskList(ITask... tasks) {
         for (ITask task : tasks) {
@@ -13,9 +12,11 @@ public class TaskList implements ITask {
         }
     }
 
-    public void onStart(double timestamp) {
-        m_startTime = timestamp;
+    protected void add(ITask task) {
+        m_tasks.add(task);
+    }
 
+    public void onStart(double timestamp) {
         if (m_tasks.size() > 0) {
             m_tasks.get(0).onStart(timestamp);
         }
