@@ -65,6 +65,6 @@ public class FollowPath implements ITask {
     }
 
     public void onStop() {
-
+        SwerveDrive.getInstance().set(Mode.Disabled, 0, 0, 0);
     }
 }
