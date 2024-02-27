@@ -35,7 +35,13 @@ public class Path {
 
         Pose2d lastPoint = m_points.get(m_index - 1);
         Pose2d targetPoint = m_points.get(m_index);
-        double m = (targetPoint.getY() - lastPoint.getY()) / (targetPoint.getX() - lastPoint.getX());
+
+        double dx = targetPoint.getX() - lastPoint.getX();
+        if (dx == 0) {
+            dx = Constants.kEpsilon;
+        }
+
+        double m = (targetPoint.getY() - lastPoint.getY()) / dx;
         double b = targetPoint.getY() - m * targetPoint.getX();
 
         if (m == 0) {

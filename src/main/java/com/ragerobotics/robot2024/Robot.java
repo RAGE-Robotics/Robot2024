@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.ITask;
+import com.ragerobotics.robot2024.auto.Square;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
@@ -31,7 +32,7 @@ public class Robot extends TimedRobot {
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
     private XboxController m_operatorController = new XboxController(Constants.kOperatorController);
 
-    private ITask m_autoTask = new CrossLine();
+    private ITask m_autoTask = new Square();
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 

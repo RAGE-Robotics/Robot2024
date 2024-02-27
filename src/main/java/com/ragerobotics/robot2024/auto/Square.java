@@ -16,7 +16,9 @@ public class Square extends TaskList {
         }
 
         add(new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(redAlliance ? Math.PI : 0)),
-                new Pose2d(new Translation2d(1, 0), new Rotation2d(redAlliance ? Math.PI : 0)),
-                new Pose2d(new Translation2d(1, 1), new Rotation2d(redAlliance ? Math.PI : 0))), true));
+                new Pose2d(new Translation2d(1.0, 0), new Rotation2d(redAlliance ? Math.PI : 0)),
+                new Pose2d(new Translation2d(1.0, 1.0), new Rotation2d(redAlliance ? Math.PI : 0)),
+                new Pose2d(new Translation2d(0, 1.0), new Rotation2d(redAlliance ? Math.PI : 0)),
+                new Pose2d(new Translation2d(0, 0), new Rotation2d(redAlliance ? Math.PI : 0))), true));
     }
 }
