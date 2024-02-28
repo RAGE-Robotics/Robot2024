@@ -33,7 +33,7 @@ public class TwoAmp extends TaskList {
                                 new Rotation2d(redAlliance ? 0 : Math.PI)),
                                 new Pose2d(new Translation2d(1.5, 0),
                                                 new Rotation2d(redAlliance ? 0 : Math.PI))),
-                                true, 0));
+                                true, 5.0));
                 add(new StopIntake());
         }
 }
