@@ -2,9 +2,11 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
+import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.auto.OneAmp;
+import com.ragerobotics.robot2024.auto.TwoAmp;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
@@ -19,6 +21,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
@@ -31,7 +34,7 @@ public class Robot extends TimedRobot {
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
     private XboxController m_operatorController = new XboxController(Constants.kOperatorController);
 
-    private ITask m_autoTask = new OneAmp();
+    private SendableChooser<ITask> m_autoTask = new SendableChooser<ITask>();
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 
@@ -41,12 +44,16 @@ public class Robot extends TimedRobot {
         m_systems.add(Climber.getInstance());
         m_systems.add(Dropper.getInstance());
 
-        m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
+        m_autoTask.setDefaultOption("Do nothing", new DoNothing());
+        m_autoTask.addOption("Cross the line", new CrossLine());
+        m_autoTask.addOption("Amp one note", new OneAmp());
+        m_autoTask.addOption("Amp two notes", new TwoAmp());
+        SmartDashboard.putData(m_autoTask);
     }
 
     @Override
     public void robotInit() {
-
+        m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
     }
 
     @Override
@@ -76,8 +83,8 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         double timestamp = Timer.getFPGATimestamp();
 
-        if (m_autoTask != null) {
-            m_autoTask.onStart(timestamp);
+        if (m_autoTask.getSelected() != null) {
+            m_autoTask.getSelected().onStart(timestamp);
         }
     }
 
@@ -85,12 +92,11 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {
         double timestamp = Timer.getFPGATimestamp();
 
-        if (m_autoTask != null) {
-            if (!m_autoTask.isDone()) {
-                m_autoTask.onUpdate(timestamp);
+        if (m_autoTask.getSelected() != null) {
+            if (!m_autoTask.getSelected().isDone()) {
+                m_autoTask.getSelected().onUpdate(timestamp);
             } else {
-                m_autoTask.onStop();
-                m_autoTask = new DoNothing();
+                m_autoTask.getSelected().onStop();
             }
         }
 
@@ -101,8 +107,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        if (m_autoTask != null) {
-            m_autoTask.onStop();
+        if (m_autoTask.getSelected() != null) {
+            m_autoTask.getSelected().onStop();
         }
     }
 
