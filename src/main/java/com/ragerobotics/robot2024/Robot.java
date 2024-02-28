@@ -133,6 +133,14 @@ public class Robot extends TimedRobot {
         double intakeDemand = m_driverController.getLeftTriggerAxis() * Constants.kIntakeGain;
         Intake.getInstance().intake(intakeDemand);
 
+        if (Intake.getInstance().intakeSensorTripped()) {
+            LEDs.noteIn();
+        }
+
+        else if (LEDs.greenOn) {
+            LEDs.allianceColor();
+        }
+
         if (m_driverController.getAButton()) {
             Climber.getInstance().retract();
         }

@@ -23,8 +23,10 @@ public class LEDs implements ISystem {
 
    static AddressableLED m_led = new AddressableLED(Constants.kLEDChannel);
    static AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(600);
+   
+   static int m_rainbowFirstPixelHue; 
 
-    static int m_rainbowFirstPixelHue; 
+   public static boolean greenOn;
     
    static Optional<Alliance> alliance = DriverStation.getAlliance();
      
@@ -50,6 +52,8 @@ public class LEDs implements ISystem {
         }
 
         m_led.setData(m_ledBuffer);
+
+        greenOn = false;
         
      }
 
@@ -72,6 +76,14 @@ public class LEDs implements ISystem {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 255, 255);
             }
+      }
+
+      public static void noteIn() {
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+            m_ledBuffer.setRGB(i, 92, 203, 131);
+            }
+
+            greenOn = true;
       }
 
      @Override
