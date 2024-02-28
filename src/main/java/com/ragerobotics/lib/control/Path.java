@@ -75,7 +75,7 @@ public class Path {
         double m2 = -1 / m;
         double b2 = currentPoint.getY() - m2 * currentPoint.getX();
 
-        double x = (b2 - b) / (m + m2);
+        double x = (b2 - b) / (m + m2 == 0 ? Constants.kEpsilon : m + m2);
         double y = m * x + b;
 
         Translation2d interceptLocation = new Translation2d(x, y);

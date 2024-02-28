@@ -15,7 +15,7 @@ public class CrossLine extends TaskList {
             redAlliance = DriverStation.getAlliance().get() == Alliance.Red;
         }
 
-        add(new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(redAlliance ? Math.PI : 0)),
-                new Pose2d(new Translation2d(2, 0), new Rotation2d(redAlliance ? Math.PI : 0))), true));
+        add(new FollowPath(new Path(new Pose2d(new Translation2d(0, 0), new Rotation2d(redAlliance ? 0 : Math.PI)),
+                new Pose2d(new Translation2d(2, 0), new Rotation2d(redAlliance ? 0 : Math.PI))), true, 5.0));
     }
 }

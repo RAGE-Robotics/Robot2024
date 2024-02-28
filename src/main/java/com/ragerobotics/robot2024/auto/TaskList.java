@@ -38,7 +38,7 @@ public class TaskList implements ITask {
     }
 
     public boolean isDone() {
-        return m_i > m_tasks.size();
+        return m_i >= m_tasks.size();
     }
 
     public void onStop() {

@@ -11,6 +11,7 @@ public class Wait implements ITask {
 
     public void onStart(double timestamp) {
         m_startTime = timestamp;
+        m_lastTime = timestamp;
     }
 
     public void onUpdate(double timestamp) {

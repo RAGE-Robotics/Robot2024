@@ -2,10 +2,14 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
+import com.ragerobotics.lib.control.Path;
 import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
+import com.ragerobotics.robot2024.auto.FollowPath;
 import com.ragerobotics.robot2024.auto.ITask;
+import com.ragerobotics.robot2024.auto.OneAmp;
 import com.ragerobotics.robot2024.auto.Square;
+import com.ragerobotics.robot2024.auto.TwoAmp;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
@@ -32,7 +36,7 @@ public class Robot extends TimedRobot {
     private XboxController m_driverController = new XboxController(Constants.kDriverController);
     private XboxController m_operatorController = new XboxController(Constants.kOperatorController);
 
-    private ITask m_autoTask = new Square();
+    private ITask m_autoTask = new TwoAmp();
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 

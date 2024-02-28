@@ -4,7 +4,7 @@ import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.Intake;
 
-public class StartIntake {
+public class StartIntake implements ITask {
     public void onStart(double timestamp) {
         Intake.getInstance().intake(Constants.kIntakeGain);
         Dropper.getInstance().transfer();

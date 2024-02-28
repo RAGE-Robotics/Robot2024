@@ -18,16 +18,20 @@ public class FollowPath implements ITask {
 
     private Path m_path;
     private boolean m_resetPosition;
+    private double m_lastTime = 0;
+    private double m_timeout;
 
     private double m_startTime;
 
-    public FollowPath(Path path, boolean resetPosition) {
+    public FollowPath(Path path, boolean resetPosition, double timeout) {
         m_path = path;
         m_resetPosition = resetPosition;
+        m_timeout = timeout;
     }
 
     public void onStart(double timestamp) {
         m_startTime = timestamp;
+        m_lastTime = timestamp;
 
         if (m_resetPosition) {
             SwerveDrive.getInstance().resetPose(m_path.getStart());
@@ -35,6 +39,8 @@ public class FollowPath implements ITask {
     }
 
     public void onUpdate(double timestamp) {
+        m_lastTime = timestamp;
+
         Pose2d setpoint = m_path.getVirtual(timestamp - m_startTime);
         Pose2d current = SwerveDrive.getInstance().getPose();
 
@@ -61,7 +67,7 @@ public class FollowPath implements ITask {
     }
 
     public boolean isDone() {
-        return m_path.isDone();
+        return m_path.isDone() || m_lastTime > m_startTime + m_timeout;
     }
 
     public void onStop() {

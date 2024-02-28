@@ -7,7 +7,7 @@ public class Constants {
     public static final double kModuleCenterDistance = 0.31115; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
     public static final double kMaxV = 3.0; // m/s
-    public static final double kMaxDriverV = 1.5; // m/s
+    public static final double kMaxDriverV = 1.75; // m/s
     public static final double kTurningFactor = 2.0;
 
     public static final int kFrontLeftDriveMotor = 14;
@@ -40,9 +40,9 @@ public class Constants {
     public static final int kTalonStatusPeriod = 100; // ms
 
     public static final double kPathFollowingTolerance = 0.05; // m
-    public static final double kPathFollowingRampTime = 2.0; // s
+    public static final double kPathFollowingRampTime = 3.0; // s
     public static final double kPathFollowingLookAheadRadius = 0.1; // m
-    public static final double kPathFollowingMaxV = 1.5; // m/s
+    public static final double kPathFollowingMaxV = 1.0; // m/s
     public static final double kPathFollowingMaxRotV = 2.0; // rad/s;
 
     public static final double kPathFollowingPositionP = 5.0;
