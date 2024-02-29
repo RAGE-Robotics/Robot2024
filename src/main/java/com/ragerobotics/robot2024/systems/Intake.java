@@ -21,7 +21,7 @@ public class Intake implements ISystem {
 
         private VictorSPX m_MotorBack = Util.makeVictorSPX(Constants.kIntakeBackCanId, true);
         private VictorSPX m_MotorFront = Util.makeVictorSPX(Constants.kIntakeFrontCanId, true);
-        private DigitalInput m_IntakeSensor = new DigitalInput(Constants.kIntakeSensorChannel);
+        private DigitalInput m_intakeSensor = new DigitalInput(Constants.kIntakeSensorChannel);
 
         private double m_demand = 0;
 
@@ -35,11 +35,13 @@ public class Intake implements ISystem {
 
         @Override
         public void onUpdate(double timestamp, Mode mode) {
-                m_MotorFront.set(ControlMode.PercentOutput, m_IntakeSensor.get() ? m_demand : 0);
-                m_MotorBack.set(ControlMode.PercentOutput, m_IntakeSensor.get() ? m_demand : 0);
+                m_MotorFront.set(ControlMode.PercentOutput,
+                                m_intakeSensor.get() || Dropper.getInstance().dropperStowed() ? m_demand : 0);
+                m_MotorBack.set(ControlMode.PercentOutput,
+                                m_intakeSensor.get() || Dropper.getInstance().dropperStowed() ? m_demand : 0);
         }
 
         public boolean intakeSensorTripped() {
-                return !m_IntakeSensor.get();
+                return !m_intakeSensor.get();
         }
 }

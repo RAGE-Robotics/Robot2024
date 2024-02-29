@@ -35,7 +35,13 @@ public class Path {
 
         Pose2d lastPoint = m_points.get(m_index - 1);
         Pose2d targetPoint = m_points.get(m_index);
-        double m = (targetPoint.getY() - lastPoint.getY()) / (targetPoint.getX() - lastPoint.getX());
+
+        double dx = targetPoint.getX() - lastPoint.getX();
+        if (dx == 0) {
+            dx = Constants.kEpsilon;
+        }
+
+        double m = (targetPoint.getY() - lastPoint.getY()) / dx;
         double b = targetPoint.getY() - m * targetPoint.getX();
 
         if (m == 0) {
@@ -69,7 +75,7 @@ public class Path {
         double m2 = -1 / m;
         double b2 = currentPoint.getY() - m2 * currentPoint.getX();
 
-        double x = (b2 - b) / (m + m2);
+        double x = (b2 - b) / (m + m2 == 0 ? Constants.kEpsilon : m + m2);
         double y = m * x + b;
 
         Translation2d interceptLocation = new Translation2d(x, y);

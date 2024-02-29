@@ -1,4 +1,3 @@
-//Add intake motor CAN ID's (lines 58 59)
 package com.ragerobotics.robot2024;
 
 public class Constants {
@@ -8,11 +7,11 @@ public class Constants {
     public static final double kModuleCenterDistance = 0.31115; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
     public static final double kMaxV = 3.0; // m/s
-    public static final double kMaxDriverV = 1.25; // m/s
+    public static final double kMaxDriverV = 1.75; // m/s
     public static final double kTurningFactor = 2.0;
 
     public static final int kFrontLeftDriveMotor = 14;
-    public static final int kFrontLeftSteeringMotor = 11;
+    public static final int kFrontLeftSteeringMotor = 17;
     public static final int kFrontRightDriveMotor = 1;
     public static final int kFrontRightSteeringMotor = 7;
     public static final int kBackLeftDriveMotor = 13;
@@ -36,22 +35,27 @@ public class Constants {
     public static final double kSteeringF = 0.0;
 
     public static final int kDriverController = 0;
+    public static final int kOperatorController = 1;
 
     public static final int kTalonStatusPeriod = 100; // ms
 
-    public static final double kPathFollowingTolerance = 0.25; // m
-    public static final double kPathFollowingRampTime = 2.0; // s
+    public static final double kPathFollowingTolerance = 0.05; // m
+    public static final double kPathFollowingRampTime = 3.0; // s
     public static final double kPathFollowingLookAheadRadius = 0.1; // m
-    public static final double kPathFollowingMaxV = 1.5; // m/s
+    public static final double kPathFollowingMaxV = 1.0; // m/s
     public static final double kPathFollowingMaxRotV = 2.0; // rad/s;
 
-    public static final double kPathFollowingPositionP = 10.0;
+    public static final double kPathFollowingPositionP = 5.0;
     public static final double kPathFollowingPositionI = 0.0;
-    public static final double kPathFollowingPositionD = 0.0;
+    public static final double kPathFollowingPositionD = 0.5;
 
     public static final double kPathFollowingAngleP = 5.0;
     public static final double kPathFollowingAngleI = 0.0;
-    public static final double kPathFollowingAngleD = 0.0;
+    public static final double kPathFollowingAngleD = 0.1;
+
+    public static final double kAngleP = 5.0;
+    public static final double kAngleI = 0.0;
+    public static final double kAngleD = 0.1;
 
     public static final double kEpsilon = 1e-6;
 
@@ -63,11 +67,32 @@ public class Constants {
     public static final int kLEDChannel = 9; //PWM
 
     public static final double kMinPressure = 100;
-    public static final double kMaxPressure = 110;
-    public static final int kClimberSoldenoid = 0;
+    public static final double kMaxPressure = 120;
+    public static final int kClimberSolenoidForwardA = 3;
+    public static final int kClimberSolenoidReverseA = 1;
+    public static final int kClimberSolenoidForwardB = 4;
+    public static final int kClimberSolenoidReverseB = 2;
 
-    public static final double kRotationP = 0;
-    public static final double kRotationI = 0;
-    public static final double kRotationD = 0;
-    public static final double kRotationF = 0;
+    public static final double kDropperRotationP = 0.09;
+    public static final double kDropperRotationI = 0;
+    public static final double kDropperRotationD = 0.01;
+    public static final double kDropperRotationF = 0;
+
+    public static final double kDropperInPos = 0;
+    public static final double kDropperVertPos = 2.25;
+    public static final double kDropperGearRatio = 72.0 / 22.0;
+    public static final double kDropperTicksPerRotation = 8192.0;
+    public static final double kDropperTolerance = 0.2;
+
+    public static final int kDropperBeltMotorId = 11;
+    public static final int kDropperRotatingMotorId = 5;
+    public static final int kDropperRollerMotorId = 15;
+    public static final int kDropperSensorChannel = 1;
+
+    public static final double kTriggerDeadband = 0.05;
+
+    public static final int kWallSensorChannelA = 0;
+    public static final int kWallSensorChannelB = 2;
+
+    public static final double kDriveAngleTolerance = 0.25;
 }
