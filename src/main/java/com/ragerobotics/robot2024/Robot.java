@@ -154,7 +154,6 @@ public class Robot extends TimedRobot {
         if (Intake.getInstance().intakeSensorTripped()) {
             LEDs.noteIn();
         }
-
         else if (LEDs.greenOn) {
             LEDs.allianceColor();
         }

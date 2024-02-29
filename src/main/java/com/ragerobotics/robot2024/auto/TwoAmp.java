@@ -34,6 +34,12 @@ public class TwoAmp extends TaskList {
                                 new Pose2d(new Translation2d(1.5, 0),
                                                 new Rotation2d(redAlliance ? 0 : Math.PI))),
                                 true, 5.0));
-                add(new StopIntake());
+                add(new ParallelTask(new FollowPath(new Path(new Pose2d(new Translation2d(1.5, 0),
+                                new Rotation2d(redAlliance ? 0 : Math.PI)),
+                                new Pose2d(new Translation2d(0.4572, (redAlliance ? 1 : -1) * 0.4572),
+                                                new Rotation2d(redAlliance ? 0 : Math.PI))),
+                                true, 5.0),
+                                new TaskList(new Wait(2), new StopIntake(), new StartDrop(), new Wait(2),
+                                                new StopDrop())));
         }
 }
