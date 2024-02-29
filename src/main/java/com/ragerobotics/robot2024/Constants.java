@@ -64,6 +64,8 @@ public class Constants {
     public static final int kIntakeSensorChannel = 3;
     public static final double kIntakeGain = 0.75;
 
+    public static final int kLEDChannel = 9; //PWM
+
     public static final double kMinPressure = 100;
     public static final double kMaxPressure = 120;
     public static final int kClimberSolenoidForwardA = 3;

@@ -11,6 +11,7 @@ import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
 import com.ragerobotics.robot2024.systems.Intake;
+import com.ragerobotics.robot2024.systems.LEDs;
 import com.ragerobotics.robot2024.systems.SwerveDrive;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -43,6 +44,7 @@ public class Robot extends TimedRobot {
         m_systems.add(Intake.getInstance());
         m_systems.add(Climber.getInstance());
         m_systems.add(Dropper.getInstance());
+        m_systems.add(LEDs.getInstance());
 
         m_autoTask.setDefaultOption("Do nothing", new DoNothing());
         m_autoTask.addOption("Cross the line", new CrossLine());
@@ -54,6 +56,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
+        LEDs.whiteLights();
     }
 
     @Override
@@ -103,6 +106,8 @@ public class Robot extends TimedRobot {
         for (ISystem system : m_systems) {
             system.onUpdate(timestamp, Mode.Auto);
         }
+
+        LEDs.rainbowColors();
     }
 
     @Override
@@ -110,6 +115,8 @@ public class Robot extends TimedRobot {
         if (m_autoTask.getSelected() != null) {
             m_autoTask.getSelected().onStop();
         }
+
+        LEDs.allianceColor();
     }
 
     @Override
@@ -143,6 +150,14 @@ public class Robot extends TimedRobot {
         double intakeDemand = Math.max(m_driverController.getLeftTriggerAxis(),
                 m_operatorController.getLeftTriggerAxis()) * Constants.kIntakeGain;
         Intake.getInstance().intake(intakeDemand);
+
+        if (Intake.getInstance().intakeSensorTripped()) {
+            LEDs.noteIn();
+        }
+
+        else if (LEDs.greenOn) {
+            LEDs.allianceColor();
+        }
 
         if (m_driverController.getAButton() || m_operatorController.getAButton()) {
             Climber.getInstance().retract();
