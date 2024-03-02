@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("y", SwerveDrive.getInstance().getPose().getY());
         SmartDashboard.putNumber("heading", SwerveDrive.getInstance().getPose().getRotation().getRadians());
         SmartDashboard.putNumber("pressure", m_compressor.getPressure());
+        SmartDashboard.putBoolean("fast", m_fast);
     }
 
     @Override
@@ -146,8 +147,8 @@ public class Robot extends TimedRobot {
         if (negative) {
             vy *= -1;
         }
-        vx *= m_fast ? Constants.kMaxDriverV : Constants.kMaxDriverV;
-        vy *= m_fast ? Constants.kMaxDriverV : Constants.kMaxDriverV;
+        vx *= m_fast ? Constants.kMaxDriverVFast : Constants.kMaxDriverV;
+        vy *= m_fast ? Constants.kMaxDriverVFast : Constants.kMaxDriverV;
         double rot = -m_driverController.getRightX() * Constants.kTurningFactor;
         negative = rot < 0;
         rot *= rot;
