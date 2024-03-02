@@ -7,7 +7,7 @@ public class Constants {
     public static final double kModuleCenterDistance = 0.31115; // meters
     public static final double kDt = 1.0 / 50.0; // seconds
     public static final double kMaxV = 4.0; // m/s
-    public static final double kMaxDriverV = 1.75; // m/s
+    public static final double kMaxDriverV = 1.5; // m/s
     public static final double kMaxDriverVFast = 3.5; // m/s
     public static final double kTurningFactor = 2.0;
 
