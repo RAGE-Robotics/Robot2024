@@ -39,6 +39,8 @@ public class Robot extends TimedRobot {
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 
+    private boolean m_fast = false;
+
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
         m_systems.add(Intake.getInstance());
@@ -128,6 +130,10 @@ public class Robot extends TimedRobot {
             SwerveDrive.getInstance().resetPose(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
         }
 
+        if (m_driverController.getBButtonPressed()) {
+            m_fast = !m_fast;
+        }
+
         double vx = -m_driverController.getLeftY();
         double vy = -m_driverController.getLeftX();
         boolean negative = vx < 0;
@@ -140,8 +146,8 @@ public class Robot extends TimedRobot {
         if (negative) {
             vy *= -1;
         }
-        vx *= Constants.kMaxDriverV;
-        vy *= Constants.kMaxDriverV;
+        vx *= m_fast ? Constants.kMaxDriverV : Constants.kMaxDriverV;
+        vy *= m_fast ? Constants.kMaxDriverV : Constants.kMaxDriverV;
         double rot = -m_driverController.getRightX() * Constants.kTurningFactor;
         negative = rot < 0;
         rot *= rot;
