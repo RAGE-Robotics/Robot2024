@@ -38,7 +38,7 @@ public class LEDs implements ISystem {
 
     public static void allianceColor() {
 
-        if (alliance.get() == Alliance.Red) {
+        if (alliance.isPresent() && alliance.get() == Alliance.Red) {
 
             for (var i = 0; i < m_ledBuffer.getLength(); i++) {
                 m_ledBuffer.setRGB(i, 255, 0, 0);
