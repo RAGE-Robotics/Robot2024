@@ -18,10 +18,12 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -38,6 +40,8 @@ public class Robot extends TimedRobot {
     private SendableChooser<ITask> m_autoTask = new SendableChooser<ITask>();
 
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
+
+    private boolean m_autoRun = false;
 
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
@@ -84,6 +88,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        m_autoRun = true;
+
         double timestamp = Timer.getFPGATimestamp();
 
         if (m_autoTask.getSelected() != null) {
@@ -114,6 +120,10 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         if (m_autoTask.getSelected() != null) {
             m_autoTask.getSelected().onStop();
+        }
+
+        if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red && m_autoRun) {
+            SwerveDrive.getInstance().resetPose(SwerveDrive.getInstance().getPose().rotateBy(new Rotation2d(-Math.PI)));
         }
 
         LEDs.allianceColor();
@@ -153,8 +163,7 @@ public class Robot extends TimedRobot {
 
         if (Intake.getInstance().intakeSensorTripped()) {
             LEDs.noteIn();
-        }
-        else if (LEDs.greenOn) {
+        } else if (LEDs.greenOn) {
             LEDs.allianceColor();
         }
 
