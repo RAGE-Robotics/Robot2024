@@ -62,7 +62,7 @@ public class Constants {
     public static final int kIntakeBackCanId = 12;
     public static final int kIntakeFrontCanId = 16;
     public static final int kIntakeSensorChannel = 3;
-    public static final double kIntakeGain = 0.75;
+    public static final double kIntakeGain = 1.0;
 
     public static final int kLEDChannel = 9; //PWM
 

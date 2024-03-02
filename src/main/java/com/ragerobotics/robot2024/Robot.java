@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
-        LEDs.whiteLights();
+        LEDs.allianceColor();
     }
 
     @Override
