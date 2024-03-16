@@ -79,6 +79,11 @@ public class Constants {
     public static final double kDropperRotationD = 0.02;
     public static final double kDropperRotationF = 0;
 
+    public static final double kDropperShooterP = 0.1;
+    public static final double kDropperShooterI = 0;
+    public static final double kDropperShooterD = 0;
+    public static final double kDropperShooterF = 0;
+
     public static final double kDropperInPos = 0;
     public static final double kDropperVertPos = 2.25;
     public static final double kDropperGearRatio = 72.0 / 22.0;

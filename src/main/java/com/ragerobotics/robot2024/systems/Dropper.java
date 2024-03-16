@@ -62,6 +62,11 @@ public class Dropper implements ISystem {
         m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
         m_rotatingMotor.config_kD(0, Constants.kDropperRotationD);
         m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
+
+        m_shooterMotor.config_kP(0, Constants.kDropperShooterP);
+        m_shooterMotor.config_kI(0, Constants.kDropperShooterI);
+        m_shooterMotor.config_kD(0, Constants.kDropperShooterD);
+        m_shooterMotor.config_kF(0, Constants.kDropperShooterF);
     }
 
     @Override
