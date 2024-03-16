@@ -22,12 +22,12 @@ public class Dropper implements ISystem {
     }
 
     public enum State {
-        Stowed, Intaking, Up, Dropping
+        Stowed, Intaking, Up, Dropping, ShootSpin, ShootFeed 
     }
 
     private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, true, false, false, false);
     private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, true, true, true, false);
-    private VictorSPX m_rollerMotor = Util.makeVictorSPX(Constants.kDropperRollerMotorId, false);
+    private VictorSPX m_shooterMotor = Util.makeVictorSPX(Constants.kDropperRollerMotorId, false);
 
     private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorChannel);
 
@@ -49,6 +49,14 @@ public class Dropper implements ISystem {
         m_state = State.Dropping;
     }
 
+    public void ShooterSpinUp() {
+        m_state = State.ShootSpin;
+    }
+
+    public void Shoot() {
+        m_state = State.ShootFeed;
+    }
+
     private Dropper() {
         m_rotatingMotor.config_kP(0, Constants.kDropperRotationP);
         m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
@@ -60,30 +68,42 @@ public class Dropper implements ISystem {
     public void onUpdate(double timestamp, Mode mode) {
         if (m_state == State.Stowed) {
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
-            m_rollerMotor.set(ControlMode.PercentOutput, 0.0);
+            m_shooterMotor.set(ControlMode.Velocity, 0.0);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 
         if (m_state == State.Intaking) {
             m_beltMotor.set(ControlMode.PercentOutput, dropperSensorTripped() ? 0 : 1.0);
-            m_rollerMotor.set(ControlMode.PercentOutput, 0.0);
+            m_shooterMotor.set(ControlMode.Velocity, 0.0);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 
         if (m_state == State.Up) {
             m_beltMotor.set(ControlMode.PercentOutput, 0);
-            m_rollerMotor.set(ControlMode.PercentOutput, 0.0);
+            m_shooterMotor.set(ControlMode.Velocity, 0.0);
             m_rotatingMotor.set(ControlMode.Position,
                     Constants.kDropperVertPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
                             * Constants.kDropperGearRatio);
         }
 
+        if (m_state == State.ShootSpin) {
+            m_beltMotor.set(ControlMode.PercentOutput, 0.0);
+            m_shooterMotor.set(ControlMode.Velocity, 500.0);
+            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
+        }
+
+        if (m_state == State.ShootFeed) {
+            m_beltMotor.set(ControlMode.PercentOutput, 1.0);
+            m_shooterMotor.set(ControlMode.Velocity, 500.0);
+            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
+        }
+
         if (m_state == State.Dropping) {
             if (dropperUp()) {
-                m_rollerMotor.set(ControlMode.PercentOutput, 1.0);
+                m_shooterMotor.set(ControlMode.Velocity, 500.0);
                 m_beltMotor.set(ControlMode.PercentOutput, 1.0);
             } else {
-                m_rollerMotor.set(ControlMode.PercentOutput, 0);
+                m_shooterMotor.set(ControlMode.Velocity, 0);
                 m_beltMotor.set(ControlMode.PercentOutput, 0.3);
             }
             m_rotatingMotor.set(ControlMode.Position,
