@@ -1,8 +1,8 @@
 package com.ragerobotics.robot2024.systems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Util;
 import com.ragerobotics.robot2024.Robot.Mode;
@@ -22,12 +22,12 @@ public class Dropper implements ISystem {
     }
 
     public enum State {
-        Stowed, Intaking, Up, Dropping, ShootSpin, ShootFeed 
+        Stowed, Intaking, Up, Dropping, ShootSpin, ShootFeed
     }
 
     private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, true, false, false, false);
     private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, true, true, true, false);
-    private VictorSPX m_shooterMotor = Util.makeVictorSPX(Constants.kDropperRollerMotorId, false);
+    private TalonFX m_shooterMotor = Util.makeTalonFX(Constants.kDropperRollerMotorId, false, false);
 
     private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorChannel);
 
