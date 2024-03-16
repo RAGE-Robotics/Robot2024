@@ -176,8 +176,14 @@ public class Robot extends TimedRobot {
 
         if (intakeDemand > Constants.kTriggerDeadband) {
             Dropper.getInstance().transfer();
+        } else if (m_driverController.getPOV() == 270 || m_operatorController.getLeftBumper()) {
+            Dropper.getInstance().ShooterSpinUp();
+        } else if (m_driverController.getPOV() == 90 || m_operatorController.getRightBumper()) {
+            Dropper.getInstance().Shoot();
         } else {
-            if (Dropper.getInstance().getState() == Dropper.State.Intaking) {
+            if (Dropper.getInstance().getState() == Dropper.State.Intaking
+                    || Dropper.getInstance().getState() == Dropper.State.ShootSpin
+                    || Dropper.getInstance().getState() == Dropper.State.ShootFeed) {
                 Dropper.getInstance().dropperStow();
             }
 
