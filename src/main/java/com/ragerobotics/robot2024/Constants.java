@@ -92,7 +92,7 @@ public class Constants {
 
     public static final int kDropperBeltMotorId = 11;
     public static final int kDropperRotatingMotorId = 5;
-    public static final int kDropperRollerMotorId = 15;
+    public static final int kDropperShooterMotorId = 15;
     public static final int kDropperSensorChannel = 1;
 
     public static final double kTriggerDeadband = 0.05;

@@ -27,7 +27,7 @@ public class Dropper implements ISystem {
 
     private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, true, false, false, false);
     private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, true, true, true, false);
-    private TalonFX m_shooterMotor = Util.makeTalonFX(Constants.kDropperRollerMotorId, false, false);
+    private TalonFX m_shooterMotor = Util.makeTalonFX(Constants.kDropperShooterMotorId, false, false);
 
     private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorChannel);
 
