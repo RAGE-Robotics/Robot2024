@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        if (m_driverController.getLeftBumper() && m_driverController.getRightBumper()) {
+        if (m_driverController.getStartButton()) {
             SwerveDrive.getInstance().resetPose(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)));
         }
 
@@ -176,9 +176,9 @@ public class Robot extends TimedRobot {
 
         if (intakeDemand > Constants.kTriggerDeadband) {
             Dropper.getInstance().transfer();
-        } else if (m_driverController.getPOV() == 270 || m_operatorController.getLeftBumper()) {
+        } else if (m_driverController.getLeftBumper() || m_operatorController.getLeftBumper()) {
             Dropper.getInstance().ShooterSpinUp();
-        } else if (m_driverController.getPOV() == 90 || m_operatorController.getRightBumper()) {
+        } else if (m_driverController.getRightBumper() || m_operatorController.getRightBumper()) {
             Dropper.getInstance().Shoot();
         } else {
             if (Dropper.getInstance().getState() == Dropper.State.Intaking

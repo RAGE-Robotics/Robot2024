@@ -25,9 +25,9 @@ public class Dropper implements ISystem {
         Stowed, Intaking, Up, Dropping, ShootSpin, ShootFeed
     }
 
-    private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, true, false, false, false);
+    private TalonSRX m_beltMotor = Util.makeTalonSRX(Constants.kDropperBeltMotorId, false, false, false, false);
     private TalonSRX m_rotatingMotor = Util.makeTalonSRX(Constants.kDropperRotatingMotorId, true, true, true, false);
-    private TalonFX m_shooterMotor = Util.makeTalonFX(Constants.kDropperShooterMotorId, false, false);
+    private TalonFX m_shooterMotor = Util.makeTalonFX(Constants.kDropperShooterMotorId, true, false);
 
     private DigitalInput m_dropperSensor = new DigitalInput(Constants.kDropperSensorChannel);
 
@@ -67,6 +67,7 @@ public class Dropper implements ISystem {
         m_shooterMotor.config_kI(0, Constants.kDropperShooterI);
         m_shooterMotor.config_kD(0, Constants.kDropperShooterD);
         m_shooterMotor.config_kF(0, Constants.kDropperShooterF);
+        m_shooterMotor.configClosedloopRamp(Constants.kDropperShooterRamp);
     }
 
     @Override
@@ -93,19 +94,19 @@ public class Dropper implements ISystem {
 
         if (m_state == State.ShootSpin) {
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
-            m_shooterMotor.set(ControlMode.Velocity, 500.0);
+            m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 
         if (m_state == State.ShootFeed) {
             m_beltMotor.set(ControlMode.PercentOutput, 1.0);
-            m_shooterMotor.set(ControlMode.Velocity, 500.0);
+            m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 
         if (m_state == State.Dropping) {
             if (dropperUp()) {
-                m_shooterMotor.set(ControlMode.Velocity, 500.0);
+                m_shooterMotor.set(ControlMode.Velocity, 1000.0);
                 m_beltMotor.set(ControlMode.PercentOutput, 1.0);
             } else {
                 m_shooterMotor.set(ControlMode.Velocity, 0);

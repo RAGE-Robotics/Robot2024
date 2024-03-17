@@ -76,24 +76,27 @@ public class Constants {
 
     public static final double kDropperRotationP = 0.09;
     public static final double kDropperRotationI = 0;
-    public static final double kDropperRotationD = 0.02;
+    public static final double kDropperRotationD = 0.04;
     public static final double kDropperRotationF = 0;
 
-    public static final double kDropperShooterP = 0.1;
+    public static final double kDropperShooterP = 0;
     public static final double kDropperShooterI = 0;
     public static final double kDropperShooterD = 0;
-    public static final double kDropperShooterF = 0;
+    public static final double kDropperShooterF = 1.0;
 
     public static final double kDropperInPos = 0;
-    public static final double kDropperVertPos = 2.25;
+    public static final double kDropperVertPos = 2.15;
     public static final double kDropperGearRatio = 72.0 / 22.0;
     public static final double kDropperTicksPerRotation = 8192.0;
     public static final double kDropperTolerance = 0.2;
 
     public static final int kDropperBeltMotorId = 11;
     public static final int kDropperRotatingMotorId = 5;
-    public static final int kDropperShooterMotorId = 15;
+    public static final int kDropperShooterMotorId = 2;
     public static final int kDropperSensorChannel = 1;
+
+    public static final double kShooterVelocity = 1500.0;
+    public static final double kDropperShooterRamp = 0.5;
 
     public static final double kTriggerDeadband = 0.05;
 
