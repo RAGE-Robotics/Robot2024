@@ -12,7 +12,6 @@ public class OneSpeaker extends TaskList {
         }
 
         public OneSpeaker(boolean redAlliance, Position position) {
-
                 if (position == Position.Amp) {
                         add(new SpinShooter());
                         add(new Wait(2));
