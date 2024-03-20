@@ -79,7 +79,7 @@ public class Dropper implements ISystem {
         }
 
         if (m_state == State.Intaking) {
-            m_beltMotor.set(ControlMode.PercentOutput, dropperSensorTripped() ? 0 : 1.0);
+            m_beltMotor.set(ControlMode.PercentOutput, dropperSensorTripped() ? 0 : 0.25);
             m_shooterMotor.set(ControlMode.Velocity, 0.0);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
@@ -94,13 +94,13 @@ public class Dropper implements ISystem {
 
         if (m_state == State.ShootSpin) {
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
-            m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
+            m_shooterMotor.set(ControlMode.PercentOutput, 1.0);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 
         if (m_state == State.ShootFeed) {
             m_beltMotor.set(ControlMode.PercentOutput, 1.0);
-            m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
+            m_shooterMotor.set(ControlMode.PercentOutput, 1.0);
             m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
         }
 

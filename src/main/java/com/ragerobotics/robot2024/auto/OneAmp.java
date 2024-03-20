@@ -16,7 +16,7 @@ public class OneAmp extends TaskList {
                                                                 (redAlliance ? -1 : 1) * 0.4572),
                                                                 new Rotation2d(redAlliance ? Math.PI : 0))),
                                                 true, 5.0),
-                                new TaskList(new Wait(2), new StartDrop(), new Wait(2), new StopDrop())));
+                                new TaskList(new Wait(2), new StartDrop(), new Wait(2), new StowShooter())));
                 add(new FollowPath(
                                 new Path(new Pose2d(
                                                 new Translation2d(0.4572,

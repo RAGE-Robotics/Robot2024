@@ -4,6 +4,7 @@
 
 package com.ragerobotics.robot2024.systems;
 
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.kauailabs.navx.frc.AHRS;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Robot;
@@ -75,6 +76,33 @@ public class SwerveDrive implements ISystem {
         private double m_vx, m_vy, m_rot;
 
         private SwerveDrive() {
+                m_frontLeftModule.m_driveMotor.configClosedloopRamp(Constants.kDriveRampRate);
+                m_frontRightModule.m_driveMotor.configClosedloopRamp(Constants.kDriveRampRate);
+                m_backLeftModule.m_driveMotor.configClosedloopRamp(Constants.kDriveRampRate);
+                m_backRightModule.m_driveMotor.configClosedloopRamp(Constants.kDriveRampRate);
+
+                m_frontLeftModule.m_driveMotor.configOpenloopRamp(Constants.kDriveRampRate);
+                m_frontRightModule.m_driveMotor.configOpenloopRamp(Constants.kDriveRampRate);
+                m_backLeftModule.m_driveMotor.configOpenloopRamp(Constants.kDriveRampRate);
+                m_backRightModule.m_driveMotor.configOpenloopRamp(Constants.kDriveRampRate);
+
+                m_frontLeftModule.m_driveMotor
+                                .configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,
+                                                Constants.kDriveCurrentLimit, Constants.kDriveCurrentLimit,
+                                                Constants.kDriveCurrentLimitTime));
+                m_frontRightModule.m_driveMotor
+                                .configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,
+                                                Constants.kDriveCurrentLimit, Constants.kDriveCurrentLimit,
+                                                Constants.kDriveCurrentLimitTime));
+                m_backLeftModule.m_driveMotor
+                                .configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,
+                                                Constants.kDriveCurrentLimit, Constants.kDriveCurrentLimit,
+                                                Constants.kDriveCurrentLimitTime));
+                m_backRightModule.m_driveMotor
+                                .configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,
+                                                Constants.kDriveCurrentLimit, Constants.kDriveCurrentLimit,
+                                                Constants.kDriveCurrentLimitTime));
+
                 set(Mode.Disabled, 0, 0, 0);
         }
 

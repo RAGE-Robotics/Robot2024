@@ -28,12 +28,16 @@ public class Constants {
     public static final double kDriveP = 0.0;
     public static final double kDriveI = 0.0;
     public static final double kDriveD = 0.0;
-    public static final double kDriveF = 0.07;
+    public static final double kDriveF = 0.25;
 
     public static final double kSteeringP = 0.5;
     public static final double kSteeringI = 0.002;
     public static final double kSteeringD = 0.12;
     public static final double kSteeringF = 0.0;
+
+    public static final double kDriveRampRate = 0.1;
+    public static final double kDriveCurrentLimit = 80;
+    public static final double kDriveCurrentLimitTime = 0.1;
 
     public static final int kDriverController = 0;
     public static final int kOperatorController = 1;
@@ -41,8 +45,8 @@ public class Constants {
     public static final int kTalonStatusPeriod = 100; // ms
 
     public static final double kPathFollowingTolerance = 0.05; // m
-    public static final double kPathFollowingRampTime = 3.0; // s
-    public static final double kPathFollowingLookAheadRadius = 0.1; // m
+    public static final double kPathFollowingRampTime = 1.0; // s
+    public static final double kPathFollowingLookAheadRadius = 0.5; // m
     public static final double kPathFollowingMaxV = 1.0; // m/s
     public static final double kPathFollowingMaxRotV = 2.0; // rad/s;
 
@@ -85,10 +89,10 @@ public class Constants {
     public static final double kDropperShooterF = 1.0;
 
     public static final double kDropperInPos = 0;
-    public static final double kDropperVertPos = 2.15;
+    public static final double kDropperVertPos = 2.0;
     public static final double kDropperGearRatio = 72.0 / 22.0;
     public static final double kDropperTicksPerRotation = 8192.0;
-    public static final double kDropperTolerance = 0.2;
+    public static final double kDropperTolerance = 0.4;
 
     public static final int kDropperBeltMotorId = 11;
     public static final int kDropperRotatingMotorId = 5;

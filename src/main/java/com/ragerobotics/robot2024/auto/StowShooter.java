@@ -2,7 +2,7 @@ package com.ragerobotics.robot2024.auto;
 
 import com.ragerobotics.robot2024.systems.Dropper;
 
-public class StopDrop implements ITask {
+public class StowShooter implements ITask {
     public void onStart(double timestamp) {
         Dropper.getInstance().dropperStow();
     }

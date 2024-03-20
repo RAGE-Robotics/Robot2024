@@ -6,7 +6,8 @@ import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.auto.OneAmp;
-import com.ragerobotics.robot2024.auto.TwoAmp;
+import com.ragerobotics.robot2024.auto.OneSpeaker;
+import com.ragerobotics.robot2024.auto.WaitCrossLine;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
@@ -51,10 +52,16 @@ public class Robot extends TimedRobot {
         m_autoTask.setDefaultOption("Do nothing", new DoNothing());
         m_autoTask.addOption("Cross the line (Blue)", new CrossLine(false));
         m_autoTask.addOption("Cross the line (Red)", new CrossLine(true));
+        m_autoTask.addOption("Cross the line with wait (Blue)", new WaitCrossLine(false));
+        m_autoTask.addOption("Cross the line with wait (Red)", new WaitCrossLine(true));
         m_autoTask.addOption("Amp one note (Blue)", new OneAmp(false));
         m_autoTask.addOption("Amp one note (Red)", new OneAmp(true));
-        m_autoTask.addOption("Amp two notes (Blue)", new TwoAmp(false));
-        m_autoTask.addOption("Amp two notes (Red)", new TwoAmp(true));
+        m_autoTask.addOption("Speaker one note (Blue) (Amp)", new OneSpeaker(false, true, false, false));
+        m_autoTask.addOption("Speaker one note (Red) (Amp)", new OneSpeaker(true, true, false, false));
+        m_autoTask.addOption("Speaker one note (Blue) (Center)", new OneSpeaker(false, false, true, false));
+        m_autoTask.addOption("Speaker one note (Red) (Center)", new OneSpeaker(true, false, true, false));
+        m_autoTask.addOption("Speaker one note (Blue) (Far)", new OneSpeaker(false, false, false, true));
+        m_autoTask.addOption("Speaker one note (Red) (Far)", new OneSpeaker(true, false, false, true));
         SmartDashboard.putData(m_autoTask);
     }
 
