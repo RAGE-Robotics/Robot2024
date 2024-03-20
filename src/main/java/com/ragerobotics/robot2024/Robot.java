@@ -2,6 +2,7 @@ package com.ragerobotics.robot2024;
 
 import java.util.ArrayList;
 
+import com.ragerobotics.lib.control.PidController;
 import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.ITask;
@@ -18,6 +19,9 @@ import com.ragerobotics.robot2024.systems.SwerveDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -41,6 +45,9 @@ public class Robot extends TimedRobot {
     private Compressor m_compressor = new Compressor(PneumaticsModuleType.REVPH);
 
     private boolean m_fast = false;
+
+    private PidController m_turnController = new PidController(Constants.kAngleP, Constants.kAngleI, Constants.kAngleD,
+            Constants.kDt);
 
     public Robot() {
         m_systems.add(SwerveDrive.getInstance());
@@ -156,12 +163,25 @@ public class Robot extends TimedRobot {
         }
         vx *= m_fast ? Constants.kMaxDriverVFast : Constants.kMaxDriverV;
         vy *= m_fast ? Constants.kMaxDriverVFast : Constants.kMaxDriverV;
-        double rot = -m_driverController.getRightX() * Constants.kTurningFactor;
-        negative = rot < 0;
-        rot *= rot;
-        if (negative) {
-            rot *= -1;
+
+        if (m_driverController.getXButtonPressed()) {
+            m_turnController.reset();
         }
+
+        double rot = 0;
+        if (!m_driverController.getXButton()) {
+            rot = -m_driverController.getRightX() * Constants.kTurningFactor;
+            negative = rot < 0;
+            rot *= rot;
+            if (negative) {
+                rot *= -1;
+            }
+        } else {
+            NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+            NetworkTableEntry tx = table.getEntry("tx");
+            rot = m_turnController.update(0, tx.getDouble(0));
+        }
+
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
 
         double intakeDemand = Math.max(m_driverController.getLeftTriggerAxis(),

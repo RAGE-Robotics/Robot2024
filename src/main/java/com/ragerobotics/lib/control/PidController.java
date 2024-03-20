@@ -17,4 +17,9 @@ public class PidController {
         m_oldE = e;
         return m_kP * e + m_kI * m_I + m_kD * de_dt;
     }
+
+    public void reset() {
+        m_I = 0;
+        m_oldE = 0;
+    }
 }
