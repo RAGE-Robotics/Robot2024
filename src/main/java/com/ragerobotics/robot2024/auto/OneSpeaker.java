@@ -7,9 +7,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class OneSpeaker extends TaskList {
-        public OneSpeaker(boolean redAlliance, boolean amp, boolean center, boolean far) {
+        public enum Position {
+                Amp, Center, Far
+        }
 
-                if (amp) {
+        public OneSpeaker(boolean redAlliance, Position position) {
+
+                if (position == Position.Amp) {
                         add(new SpinShooter());
                         add(new Wait(2));
                         add(new RunShooter());
@@ -25,7 +29,7 @@ public class OneSpeaker extends TaskList {
                                                         new Rotation2d(redAlliance ? 0.5235987755982988
                                                                         : Math.PI - 0.5235987755982988))),
                                         true, 5.0), new StopIntake()));
-                } else if (center) {
+                } else if (position == Position.Center) {
                         add(new FollowPath(new Path(
                                         new Pose2d(new Translation2d(0, 0),
                                                         new Rotation2d(redAlliance ? Math.PI / 2 : 0)),
@@ -47,7 +51,7 @@ public class OneSpeaker extends TaskList {
                                                         0),
                                                         new Rotation2d(redAlliance ? Math.PI / 2 : 0))),
                                         true, 5.0), new StopIntake()));
-                } else if (far) {
+                } else if (position == Position.Far) {
 
                 }
         }
