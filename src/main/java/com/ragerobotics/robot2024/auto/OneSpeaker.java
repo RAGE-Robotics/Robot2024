@@ -52,7 +52,31 @@ public class OneSpeaker extends TaskList {
                                                         new Rotation2d(redAlliance ? Math.PI / 2 : 0))),
                                         true, 5.0), new StopIntake()));
                 } else if (position == Position.Far) {
+                        add(new SpinShooter());
+                        add(new Wait(2));
+                        add(new RunShooter());
+                        add(new Wait(2));
+                        add(new StowShooter());
 
+                        add(new TaskList(new StartIntake(), new FollowPath(new Path(
+                                        new Pose2d(new Translation2d(0, 0),
+                                                        new Rotation2d(redAlliance ? 0.5235987755982988 - Math.PI / 2
+                                                                        : Math.PI - 0.5235987755982988 + Math.PI / 2)),
+                                        new Pose2d(new Translation2d(0,
+                                                        redAlliance ? 2 : -2),
+                                                        new Rotation2d(redAlliance ? 0.5235987755982988 - Math.PI / 2
+                                                                        : Math.PI - 0.5235987755982988 + Math.PI / 2))),
+                                        true, 5.0), new StopIntake()));
+                        add(new TaskList(new StartIntake(), new FollowPath(new Path(
+                                        new Pose2d(new Translation2d(0,
+                                                        redAlliance ? 2 : -2),
+                                                        new Rotation2d(redAlliance ? 0.5235987755982988 - Math.PI / 2
+                                                                        : Math.PI - 0.5235987755982988 + Math.PI / 2)),
+                                        new Pose2d(new Translation2d(4,
+                                                        redAlliance ? 2 : -2),
+                                                        new Rotation2d(redAlliance ? 0.5235987755982988 - Math.PI / 2
+                                                                        : Math.PI - 0.5235987755982988 + Math.PI / 2))),
+                                        true, 5.0), new StopIntake()));
                 }
         }
 }
