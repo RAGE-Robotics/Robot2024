@@ -7,9 +7,9 @@ import com.ragerobotics.robot2024.auto.CrossLine;
 import com.ragerobotics.robot2024.auto.DoNothing;
 import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.auto.OneAmp;
-import com.ragerobotics.robot2024.auto.OneSpeaker;
+import com.ragerobotics.robot2024.auto.Speaker;
 import com.ragerobotics.robot2024.auto.WaitCrossLine;
-import com.ragerobotics.robot2024.auto.OneSpeaker.Position;
+import com.ragerobotics.robot2024.auto.Speaker.Position;
 import com.ragerobotics.robot2024.systems.Climber;
 import com.ragerobotics.robot2024.systems.Dropper;
 import com.ragerobotics.robot2024.systems.ISystem;
@@ -47,7 +47,8 @@ public class Robot extends TimedRobot {
 
     private boolean m_fast = false;
 
-    private PidController m_turnController = new PidController(Constants.kAngleP, Constants.kAngleI, Constants.kAngleD,
+    private PidController m_turnController = new PidController(Constants.kVisionP, Constants.kVisionI,
+            Constants.kVisionD,
             Constants.kDt);
 
     public Robot() {
@@ -62,14 +63,13 @@ public class Robot extends TimedRobot {
         m_autoTask.addOption("Cross the line (Red)", new CrossLine(true));
         m_autoTask.addOption("Cross the line with wait (Blue)", new WaitCrossLine(false));
         m_autoTask.addOption("Cross the line with wait (Red)", new WaitCrossLine(true));
-        m_autoTask.addOption("Amp one note (Blue)", new OneAmp(false));
-        m_autoTask.addOption("Amp one note (Red)", new OneAmp(true));
-        m_autoTask.addOption("Speaker one note (Blue) (Amp)", new OneSpeaker(false, Position.Amp));
-        m_autoTask.addOption("Speaker one note (Red) (Amp)", new OneSpeaker(true, Position.Amp));
-        m_autoTask.addOption("Speaker one note (Blue) (Center)", new OneSpeaker(false, Position.Center));
-        m_autoTask.addOption("Speaker one note (Red) (Center)", new OneSpeaker(true, Position.Center));
-        m_autoTask.addOption("Speaker one note (Blue) (Far)", new OneSpeaker(false, Position.Far));
-        m_autoTask.addOption("Speaker one note (Red) (Far)", new OneSpeaker(true, Position.Far));
+        m_autoTask.addOption("Amp (Blue)", new OneAmp(false));
+        m_autoTask.addOption("Amp (Red)", new OneAmp(true));
+        m_autoTask.addOption("Speaker (Blue) (Amp)", new Speaker(false, Position.Amp));
+        m_autoTask.addOption("Speaker (Red) (Amp)", new Speaker(true, Position.Amp));
+        m_autoTask.addOption("Speaker (Center)", new Speaker(false, Position.Center));
+        m_autoTask.addOption("Speaker (Blue) (Far)", new Speaker(false, Position.Far));
+        m_autoTask.addOption("Speaker (Red) (Far)", new Speaker(true, Position.Far));
         SmartDashboard.putData(m_autoTask);
     }
 
@@ -180,7 +180,7 @@ public class Robot extends TimedRobot {
         } else {
             NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
             NetworkTableEntry tx = table.getEntry("tx");
-            rot = m_turnController.update(0, tx.getDouble(0));
+            rot = m_turnController.update(Constants.kVisionOffset, tx.getDouble(0));
         }
 
         SwerveDrive.getInstance().set(SwerveDrive.Mode.Velocity, vx, vy, rot);
