@@ -78,9 +78,9 @@ public class Constants {
     public static final int kClimberSolenoidForwardB = 4;
     public static final int kClimberSolenoidReverseB = 2;
 
-    public static final double kDropperRotationP = 0.09;
+    public static final double kDropperRotationP = 0.1;
     public static final double kDropperRotationI = 0;
-    public static final double kDropperRotationD = 0.025;
+    public static final double kDropperRotationD = 0.015;
     public static final double kDropperRotationF = 0;
 
     public static final double kDropperShooterP = 0;
