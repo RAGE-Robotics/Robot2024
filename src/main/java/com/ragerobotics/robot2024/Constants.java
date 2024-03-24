@@ -36,7 +36,7 @@ public class Constants {
     public static final double kSteeringF = 0.0;
 
     public static final double kDriveRampRate = 0.1;
-    public static final double kDriveCurrentLimit = 80;
+    public static final double kDriveCurrentLimit = 75;
     public static final double kDriveCurrentLimitTime = 0.1;
 
     public static final int kDriverController = 0;
