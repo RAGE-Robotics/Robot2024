@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         m_compressor.enableAnalog(Constants.kMinPressure, Constants.kMaxPressure);
-        LEDs.allianceColor();
+        LEDs.getInstance().allianceColor();
     }
 
     @Override
@@ -102,6 +102,8 @@ public class Robot extends TimedRobot {
         for (ISystem system : m_systems) {
             system.onUpdate(timestamp, Mode.Disabled);
         }
+
+        LEDs.getInstance().allianceColor();
     }
 
     @Override
@@ -129,7 +131,7 @@ public class Robot extends TimedRobot {
             system.onUpdate(timestamp, Mode.Auto);
         }
 
-        LEDs.rainbowColors();
+        LEDs.getInstance().rainbowColors();
     }
 
     @Override
@@ -138,7 +140,7 @@ public class Robot extends TimedRobot {
             m_autoTask.getSelected().onStop();
         }
 
-        LEDs.allianceColor();
+        LEDs.getInstance().allianceColor();
     }
 
     @Override
@@ -191,9 +193,9 @@ public class Robot extends TimedRobot {
         Intake.getInstance().intake(intakeDemand);
 
         if (Intake.getInstance().intakeSensorTripped()) {
-            LEDs.noteIn();
+            LEDs.getInstance().noteIn();
         } else if (LEDs.greenOn) {
-            LEDs.allianceColor();
+            LEDs.getInstance().allianceColor();
         }
 
         if (m_driverController.getAButton() || m_operatorController.getAButton()) {

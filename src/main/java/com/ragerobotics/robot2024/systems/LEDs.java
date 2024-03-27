@@ -13,7 +13,25 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public class LEDs implements ISystem {
     private static LEDs instance;
 
-    public static LEDs getInstance() {
+    private AddressableLED m_led;
+    private AddressableLEDBuffer m_ledBuffer;
+
+    private int m_rainbowFirstPixelHue;
+
+    public static boolean greenOn;
+
+    private Optional<Alliance> alliance;
+
+    private LEDs() {
+        m_led = new AddressableLED(Constants.kLEDChannel);
+        m_ledBuffer = new AddressableLEDBuffer(600);
+        m_led.setLength(m_ledBuffer.getLength());
+        m_led.setData(m_ledBuffer);
+        m_led.start();
+        alliance = DriverStation.getAlliance();
+    }
+
+    public static synchronized LEDs getInstance() {
         if (instance == null) {
             instance = new LEDs();
         }
@@ -21,22 +39,7 @@ public class LEDs implements ISystem {
         return instance;
     }
 
-    static AddressableLED m_led = new AddressableLED(Constants.kLEDChannel);
-    static AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(600);
-
-    static int m_rainbowFirstPixelHue;
-
-    public static boolean greenOn;
-
-    static Optional<Alliance> alliance = DriverStation.getAlliance();
-
-    public LEDs() {
-        m_led.setLength(m_ledBuffer.getLength());
-        m_led.setData(m_ledBuffer);
-        m_led.start();
-    }
-
-    public static void allianceColor() {
+    public void allianceColor() {
 
         if (alliance.isPresent() && alliance.get() == Alliance.Red) {
 
@@ -57,7 +60,7 @@ public class LEDs implements ISystem {
 
     }
 
-    public static void rainbowColors() {
+    public void rainbowColors() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
 
@@ -72,13 +75,13 @@ public class LEDs implements ISystem {
 
     }
 
-    public static void whiteLights() {
+    public void whiteLights() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 255, 255, 255);
         }
     }
 
-    public static void noteIn() {
+    public void noteIn() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
             m_ledBuffer.setRGB(i, 92, 203, 131);
         }
