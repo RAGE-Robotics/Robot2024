@@ -8,7 +8,7 @@ public class Constants {
     public static final double kDt = 1.0 / 50.0; // seconds
     public static final double kMaxV = 4.0; // m/s
     public static final double kMaxDriverV = 1.5; // m/s
-    public static final double kMaxDriverVFast = 3.5; // m/s
+    public static final double kMaxDriverVFast = 4.0; // m/s
     public static final double kTurningFactor = 2.0;
 
     public static final int kFrontLeftDriveMotor = 14;
@@ -83,6 +83,11 @@ public class Constants {
     public static final double kDropperRotationD = 0.015;
     public static final double kDropperRotationF = 0;
 
+    public static final double kDropperRotationP1 = 0.4;
+    public static final double kDropperRotationI1 = 0;
+    public static final double kDropperRotationD1 = 0;
+    public static final double kDropperRotationF1 = 0.2;
+
     public static final double kDropperShooterP = 0;
     public static final double kDropperShooterI = 0;
     public static final double kDropperShooterD = 0;
@@ -113,4 +118,9 @@ public class Constants {
     public static final double kVisionP = 0.1;
     public static final double kVisionI = 0.0;
     public static final double kVisionD = 0.01;
+
+    public static final double kShooterBaseTy = -1.56194400787354;
+    public static final double kShooterAngleBeta0 = -0.02; // -0.0357482564;
+    public static final double kShooterAngleBeta1 = -0.0208957231;
+    public static final double kShooterAngleBeta2 = -0.0002865401;
 }

@@ -1,12 +1,16 @@
 package com.ragerobotics.robot2024.systems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ragerobotics.robot2024.Constants;
 import com.ragerobotics.robot2024.Util;
 import com.ragerobotics.robot2024.Robot.Mode;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Dropper implements ISystem {
@@ -33,6 +37,8 @@ public class Dropper implements ISystem {
 
     private State m_state = State.Stowed;
 
+    private double m_lastPosition = 0;
+
     public void dropperStow() {
         m_state = State.Stowed;
     }
@@ -57,6 +63,21 @@ public class Dropper implements ISystem {
         m_state = State.ShootFeed;
     }
 
+    private double shooterAngle() {
+        NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+        NetworkTableEntry ty = table.getEntry("ty");
+        double tyValue = ty.getDouble(Constants.kShooterBaseTy);
+
+        double position = Constants.kShooterAngleBeta2 * tyValue * tyValue + Constants.kShooterAngleBeta1 * tyValue
+                + Constants.kShooterAngleBeta0;
+
+        if (position > 0.4) {
+            position = 0.4;
+        }
+
+        return position < 0 ? 0 : position;
+    }
+
     private Dropper() {
         m_rotatingMotor.config_kP(0, Constants.kDropperRotationP);
         m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
@@ -73,18 +94,37 @@ public class Dropper implements ISystem {
     @Override
     public void onUpdate(double timestamp, Mode mode) {
         if (m_state == State.Stowed) {
+            m_rotatingMotor.config_kP(0, Constants.kDropperRotationP);
+            m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
+            m_rotatingMotor.config_kD(0, Constants.kDropperRotationD);
+            m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
+
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
             m_shooterMotor.set(ControlMode.Velocity, 0.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
+            m_rotatingMotor.set(ControlMode.Position,
+                    Constants.kDropperInPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
+                            * Constants.kDropperGearRatio);
         }
 
         if (m_state == State.Intaking) {
+            m_rotatingMotor.config_kP(0, Constants.kDropperRotationP);
+            m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
+            m_rotatingMotor.config_kD(0, Constants.kDropperRotationD);
+            m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
+
             m_beltMotor.set(ControlMode.PercentOutput, dropperSensorTripped() ? 0 : 0.25);
             m_shooterMotor.set(ControlMode.Velocity, 0.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
+            m_rotatingMotor.set(ControlMode.Position,
+                    Constants.kDropperInPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
+                            * Constants.kDropperGearRatio);
         }
 
         if (m_state == State.Up) {
+            m_rotatingMotor.config_kP(0, Constants.kDropperRotationP);
+            m_rotatingMotor.config_kI(0, Constants.kDropperRotationI);
+            m_rotatingMotor.config_kD(0, Constants.kDropperRotationD);
+            m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
+
             m_beltMotor.set(ControlMode.PercentOutput, 0);
             m_shooterMotor.set(ControlMode.Velocity, 0.0);
             m_rotatingMotor.set(ControlMode.Position,
@@ -93,16 +133,45 @@ public class Dropper implements ISystem {
         }
 
         if (m_state == State.ShootSpin) {
+            double angle = shooterAngle();
+            if (Math.abs(angle) < Constants.kEpsilon) {
+                angle = m_lastPosition;
+            } else {
+                m_lastPosition = angle;
+            }
+
+            m_rotatingMotor.config_kP(0, Constants.kDropperRotationP1);
+            m_rotatingMotor.config_kI(0, Constants.kDropperRotationI1);
+            m_rotatingMotor.config_kD(0, Constants.kDropperRotationD1);
+            m_rotatingMotor.config_kF(0, Constants.kDropperRotationF1);
+
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
             m_shooterMotor.set(ControlMode.PercentOutput, 1.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
+            m_rotatingMotor.set(ControlMode.Position, angle / 2 / Math.PI * Constants.kDropperTicksPerRotation
+                    * Constants.kDropperGearRatio);
         }
 
         if (m_state == State.ShootFeed) {
+            double angle = shooterAngle();
+            if (Math.abs(angle) < Constants.kEpsilon) {
+                angle = m_lastPosition;
+            } else {
+                m_lastPosition = angle;
+            }
+
+            m_rotatingMotor.config_kP(0, Constants.kDropperRotationP1);
+            m_rotatingMotor.config_kI(0, Constants.kDropperRotationI1);
+            m_rotatingMotor.config_kD(0, Constants.kDropperRotationD1);
+            m_rotatingMotor.config_kF(0, Constants.kDropperRotationF1);
+
             m_beltMotor.set(ControlMode.PercentOutput, 1.0);
             m_shooterMotor.set(ControlMode.PercentOutput, 1.0);
-            m_rotatingMotor.set(ControlMode.Position, Constants.kDropperInPos);
+            m_rotatingMotor.set(ControlMode.Position, angle / 2 / Math.PI * Constants.kDropperTicksPerRotation
+                    * Constants.kDropperGearRatio);
         }
+
+        System.out.println("setpoint: " + shooterAngle() + ", position: " + m_rotatingMotor.getSelectedSensorPosition()
+                * 2 * Math.PI / Constants.kDropperTicksPerRotation / Constants.kDropperGearRatio);
 
         if (m_state == State.Dropping) {
             if (dropperUp()) {
