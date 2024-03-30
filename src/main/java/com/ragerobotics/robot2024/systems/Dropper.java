@@ -1,7 +1,6 @@
 package com.ragerobotics.robot2024.systems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.SlotConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ragerobotics.robot2024.Constants;
@@ -12,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Dropper implements ISystem {
     private static Dropper instance;
@@ -100,7 +100,7 @@ public class Dropper implements ISystem {
             m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
 
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
-            m_shooterMotor.set(ControlMode.Velocity, 0.0);
+            m_shooterMotor.set(ControlMode.PercentOutput, 0.0);
             m_rotatingMotor.set(ControlMode.Position,
                     Constants.kDropperInPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
                             * Constants.kDropperGearRatio);
@@ -113,7 +113,7 @@ public class Dropper implements ISystem {
             m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
 
             m_beltMotor.set(ControlMode.PercentOutput, dropperSensorTripped() ? 0 : 0.25);
-            m_shooterMotor.set(ControlMode.Velocity, 0.0);
+            m_shooterMotor.set(ControlMode.PercentOutput, 0.0);
             m_rotatingMotor.set(ControlMode.Position,
                     Constants.kDropperInPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
                             * Constants.kDropperGearRatio);
@@ -126,7 +126,7 @@ public class Dropper implements ISystem {
             m_rotatingMotor.config_kF(0, Constants.kDropperRotationF);
 
             m_beltMotor.set(ControlMode.PercentOutput, 0);
-            m_shooterMotor.set(ControlMode.Velocity, 0.0);
+            m_shooterMotor.set(ControlMode.PercentOutput, 0.0);
             m_rotatingMotor.set(ControlMode.Position,
                     Constants.kDropperVertPos / 2 / Math.PI * Constants.kDropperTicksPerRotation
                             * Constants.kDropperGearRatio);
@@ -146,7 +146,7 @@ public class Dropper implements ISystem {
             m_rotatingMotor.config_kF(0, Constants.kDropperRotationF1);
 
             m_beltMotor.set(ControlMode.PercentOutput, 0.0);
-            m_shooterMotor.set(ControlMode.PercentOutput, 1.0);
+            m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
             m_rotatingMotor.set(ControlMode.Position, angle / 2 / Math.PI * Constants.kDropperTicksPerRotation
                     * Constants.kDropperGearRatio);
         }
@@ -165,20 +165,17 @@ public class Dropper implements ISystem {
             m_rotatingMotor.config_kF(0, Constants.kDropperRotationF1);
 
             m_beltMotor.set(ControlMode.PercentOutput, 1.0);
-            m_shooterMotor.set(ControlMode.PercentOutput, 1.0);
+            m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
             m_rotatingMotor.set(ControlMode.Position, angle / 2 / Math.PI * Constants.kDropperTicksPerRotation
                     * Constants.kDropperGearRatio);
         }
 
-        System.out.println("setpoint: " + shooterAngle() + ", position: " + m_rotatingMotor.getSelectedSensorPosition()
-                * 2 * Math.PI / Constants.kDropperTicksPerRotation / Constants.kDropperGearRatio);
-
         if (m_state == State.Dropping) {
             if (dropperUp()) {
-                m_shooterMotor.set(ControlMode.Velocity, 1000.0);
+                m_shooterMotor.set(ControlMode.PercentOutput, 0.25);
                 m_beltMotor.set(ControlMode.PercentOutput, 1.0);
             } else {
-                m_shooterMotor.set(ControlMode.Velocity, 0);
+                m_shooterMotor.set(ControlMode.PercentOutput, 0);
                 m_beltMotor.set(ControlMode.PercentOutput, 0.3);
             }
             m_rotatingMotor.set(ControlMode.Position,
@@ -186,6 +183,8 @@ public class Dropper implements ISystem {
                             * Constants.kDropperGearRatio);
         }
 
+        SmartDashboard.putBoolean("shooter_setpoint_reached",
+                m_shooterMotor.getSelectedSensorVelocity() >= Constants.kShooterVelocity);
     }
 
     public boolean dropperSensorTripped() {

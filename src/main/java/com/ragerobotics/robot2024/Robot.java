@@ -9,6 +9,7 @@ import com.ragerobotics.robot2024.auto.ITask;
 import com.ragerobotics.robot2024.auto.OneAmp;
 import com.ragerobotics.robot2024.auto.OneSpeakerAmp;
 import com.ragerobotics.robot2024.auto.OneSpeakerFar;
+import com.ragerobotics.robot2024.auto.ThreeSpeaker;
 import com.ragerobotics.robot2024.auto.TwoSpeaker;
 import com.ragerobotics.robot2024.auto.WaitCrossLine;
 import com.ragerobotics.robot2024.systems.Climber;
@@ -71,6 +72,8 @@ public class Robot extends TimedRobot {
         m_autoTask.addOption("Two Speaker (Center)", new TwoSpeaker(false));
         m_autoTask.addOption("One Speaker (Blue) (Far)", new OneSpeakerFar(false));
         m_autoTask.addOption("One Speaker (Red) (Far)", new OneSpeakerFar(true));
+        m_autoTask.addOption("Three Speaker (Blue) (Center)", new ThreeSpeaker(false));
+        m_autoTask.addOption("Three Speaker (Red) (Center)", new ThreeSpeaker(true));
         SmartDashboard.putData(m_autoTask);
     }
 

@@ -52,11 +52,11 @@ public class Constants {
 
     public static final double kPathFollowingPositionP = 5.0;
     public static final double kPathFollowingPositionI = 0.0;
-    public static final double kPathFollowingPositionD = 0.5;
+    public static final double kPathFollowingPositionD = 0.25;
 
     public static final double kPathFollowingAngleP = 5.0;
     public static final double kPathFollowingAngleI = 0.0;
-    public static final double kPathFollowingAngleD = 0.1;
+    public static final double kPathFollowingAngleD = 0.25;
 
     public static final double kAngleP = 5.0;
     public static final double kAngleI = 0.0;
@@ -88,10 +88,10 @@ public class Constants {
     public static final double kDropperRotationD1 = 0;
     public static final double kDropperRotationF1 = 0.2;
 
-    public static final double kDropperShooterP = 0;
+    public static final double kDropperShooterP = 0.1;
     public static final double kDropperShooterI = 0;
     public static final double kDropperShooterD = 0;
-    public static final double kDropperShooterF = 1.0;
+    public static final double kDropperShooterF = 0.05;
 
     public static final double kDropperInPos = 0;
     public static final double kDropperVertPos = 2.0;
@@ -104,7 +104,7 @@ public class Constants {
     public static final int kDropperShooterMotorId = 2;
     public static final int kDropperSensorChannel = 1;
 
-    public static final double kShooterVelocity = 1500.0;
+    public static final double kShooterVelocity = 20000.0;
     public static final double kDropperShooterRamp = 0.5;
 
     public static final double kTriggerDeadband = 0.05;
@@ -120,7 +120,7 @@ public class Constants {
     public static final double kVisionD = 0.01;
 
     public static final double kShooterBaseTy = -1.56194400787354;
-    public static final double kShooterAngleBeta0 = -0.02; // -0.0357482564;
+    public static final double kShooterAngleBeta0 = -0.039; // -0.0357482564;
     public static final double kShooterAngleBeta1 = -0.0208957231;
     public static final double kShooterAngleBeta2 = -0.0002865401;
 }
