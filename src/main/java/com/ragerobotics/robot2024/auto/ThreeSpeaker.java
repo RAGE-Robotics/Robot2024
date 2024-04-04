@@ -33,7 +33,7 @@ public class ThreeSpeaker extends TaskList {
 
                 add(new TaskList(new StartIntake(), new FollowPath(new Path(
                                 new Pose2d(new Translation2d(2.0, 0), new Rotation2d(redAlliance ? 0 : Math.PI)),
-                                new Pose2d(new Translation2d(1.4, redAlliance ? -1.6 : 1.6),
+                                new Pose2d(new Translation2d(1.35, redAlliance ? -1.65 : 1.65),
                                                 new Rotation2d(redAlliance ? 0 : Math.PI))),
                                 true, 5.0), new StopIntake()));
 

@@ -183,6 +183,7 @@ public class Dropper implements ISystem {
                             * Constants.kDropperGearRatio);
         }
 
+        SmartDashboard.putNumber("shooter_velocity", m_shooterMotor.getSelectedSensorVelocity());
         SmartDashboard.putBoolean("shooter_setpoint_reached",
                 m_shooterMotor.getSelectedSensorVelocity() >= Constants.kShooterVelocity);
     }
