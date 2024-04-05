@@ -39,6 +39,12 @@ public class Dropper implements ISystem {
 
     private double m_lastPosition = 0;
 
+    private boolean m_feed = false;
+
+    public void setFeed(boolean feed) {
+        m_feed = feed;
+    }
+
     public void dropperStow() {
         m_state = State.Stowed;
     }
@@ -140,6 +146,12 @@ public class Dropper implements ISystem {
                 m_lastPosition = angle;
             }
 
+            if (m_feed) {
+                angle = Constants.kShooterFeedAngle;
+            }
+
+            SmartDashboard.putNumber("shooter_angle_setpoint", angle);
+
             m_rotatingMotor.config_kP(0, Constants.kDropperRotationP1);
             m_rotatingMotor.config_kI(0, Constants.kDropperRotationI1);
             m_rotatingMotor.config_kD(0, Constants.kDropperRotationD1);
@@ -159,6 +171,12 @@ public class Dropper implements ISystem {
                 m_lastPosition = angle;
             }
 
+            if (m_feed) {
+                angle = Constants.kShooterFeedAngle;
+            }
+
+            SmartDashboard.putNumber("shooter_angle_setpoint", angle);
+
             m_rotatingMotor.config_kP(0, Constants.kDropperRotationP1);
             m_rotatingMotor.config_kI(0, Constants.kDropperRotationI1);
             m_rotatingMotor.config_kD(0, Constants.kDropperRotationD1);
@@ -168,6 +186,10 @@ public class Dropper implements ISystem {
             m_shooterMotor.set(ControlMode.Velocity, Constants.kShooterVelocity);
             m_rotatingMotor.set(ControlMode.Position, angle / 2 / Math.PI * Constants.kDropperTicksPerRotation
                     * Constants.kDropperGearRatio);
+        }
+
+        if (m_state != State.ShootSpin && m_state != State.ShootFeed) {
+            m_lastPosition = 0;
         }
 
         if (m_state == State.Dropping) {
@@ -186,6 +208,9 @@ public class Dropper implements ISystem {
         SmartDashboard.putNumber("shooter_velocity", m_shooterMotor.getSelectedSensorVelocity());
         SmartDashboard.putBoolean("shooter_setpoint_reached",
                 m_shooterMotor.getSelectedSensorVelocity() >= Constants.kShooterVelocity);
+        
+        SmartDashboard.putNumber("shooter_angle", m_rotatingMotor.getSelectedSensorPosition() / Constants.kDropperTicksPerRotation
+                / Constants.kDropperGearRatio * 2 * Math.PI);
     }
 
     public boolean dropperSensorTripped() {

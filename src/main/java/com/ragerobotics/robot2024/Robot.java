@@ -210,10 +210,10 @@ public class Robot extends TimedRobot {
 
         if (intakeDemand > Constants.kTriggerDeadband) {
             Dropper.getInstance().transfer();
-        } else if (m_driverController.getLeftBumper() || m_operatorController.getLeftBumper()) {
-            Dropper.getInstance().ShooterSpinUp();
         } else if (m_driverController.getRightBumper() || m_operatorController.getRightBumper()) {
             Dropper.getInstance().Shoot();
+        } else if (m_driverController.getLeftBumper() || m_operatorController.getLeftBumper()) {
+            Dropper.getInstance().ShooterSpinUp();
         } else {
             if (Dropper.getInstance().getState() == Dropper.State.Intaking
                     || Dropper.getInstance().getState() == Dropper.State.ShootSpin
@@ -232,6 +232,8 @@ public class Robot extends TimedRobot {
                 Dropper.getInstance().dropperVertical();
             }
         }
+
+        Dropper.getInstance().setFeed(m_driverController.getPOV() == 270 || m_operatorController.getPOV() == 270);
 
         double timestamp = Timer.getFPGATimestamp();
         for (ISystem system : m_systems) {
