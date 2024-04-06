@@ -233,8 +233,6 @@ public class Robot extends TimedRobot {
             }
         }
 
-        Dropper.getInstance().setFeed(m_driverController.getPOV() == 270 || m_operatorController.getPOV() == 270);
-
         double timestamp = Timer.getFPGATimestamp();
         for (ISystem system : m_systems) {
             system.onUpdate(timestamp, Mode.Teleop);

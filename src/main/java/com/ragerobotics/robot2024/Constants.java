@@ -83,9 +83,9 @@ public class Constants {
     public static final double kDropperRotationD = 0.015;
     public static final double kDropperRotationF = 0;
 
-    public static final double kDropperRotationP1 = 0.4;
-    public static final double kDropperRotationI1 = 0.001;
-    public static final double kDropperRotationD1 = 0.1;
+    public static final double kDropperRotationP1 = 0.6;
+    public static final double kDropperRotationI1 = 0;
+    public static final double kDropperRotationD1 = 0;
     public static final double kDropperRotationF1 = 0.2;
 
     public static final double kDropperShooterP = 0.15;

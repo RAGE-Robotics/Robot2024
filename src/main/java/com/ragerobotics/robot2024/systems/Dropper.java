@@ -39,12 +39,6 @@ public class Dropper implements ISystem {
 
     private double m_lastPosition = 0;
 
-    private boolean m_feed = false;
-
-    public void setFeed(boolean feed) {
-        m_feed = feed;
-    }
-
     public void dropperStow() {
         m_state = State.Stowed;
     }
@@ -146,10 +140,6 @@ public class Dropper implements ISystem {
                 m_lastPosition = angle;
             }
 
-            if (m_feed) {
-                angle = Constants.kShooterFeedAngle;
-            }
-
             SmartDashboard.putNumber("shooter_angle_setpoint", angle);
 
             m_rotatingMotor.config_kP(0, Constants.kDropperRotationP1);
@@ -169,10 +159,6 @@ public class Dropper implements ISystem {
                 angle = m_lastPosition;
             } else {
                 m_lastPosition = angle;
-            }
-
-            if (m_feed) {
-                angle = Constants.kShooterFeedAngle;
             }
 
             SmartDashboard.putNumber("shooter_angle_setpoint", angle);
